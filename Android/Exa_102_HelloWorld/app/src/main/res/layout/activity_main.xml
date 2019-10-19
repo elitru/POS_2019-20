@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:id="@+id/txtWelcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/welcome"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/txtMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/enterName"
+        android:textAlignment="textStart"
+        android:textSize="18sp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:autofillHints=""/>
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/textHint"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:paddingHorizontal="5dp"
+        android:inputType="text"
+        android:autofillHints="" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btSubmit"
+        android:text="@string/submit"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>

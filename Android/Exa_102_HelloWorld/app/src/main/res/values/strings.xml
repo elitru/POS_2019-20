@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Exa_102_HelloWorld</string>
+    <string name="welcome">Welcome to our first app</string>
+    <string name="enterName">Please enter your name</string>
+    <string name="submit">Submit</string>
+    <string name="textHint">Max Mustermann</string>
+    <string name="finish">Finish</string>
+</resources>

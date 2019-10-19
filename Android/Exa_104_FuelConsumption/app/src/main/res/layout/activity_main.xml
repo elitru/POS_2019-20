@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentRight="true"
+    android:layout_weight="1"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tvHeadline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="20px"
+        android:text="Fuel Consumption"
+        android:textAlignment="center"
+        android:textColor="#009688"
+        android:textSize="36sp"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/tvFuel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvHeadline"
+        android:layout_toLeftOf="@id/etFuel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignBaseline="@id/etFuel"
+        android:textSize="18dp"
+        android:paddingLeft="10dp"
+        android:text="Fuel in Liter" />
+
+    <EditText
+        android:id="@+id/etFuel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvHeadline"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        android:hint="1.0"/>
+
+    <TextView
+        android:id="@+id/tvDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvFuel"
+        android:layout_toLeftOf="@id/etDistance"
+        android:layout_alignParentLeft="true"
+        android:layout_alignBaseline="@id/etDistance"
+        android:textSize="18dp"
+        android:paddingLeft="10dp"
+        android:text="Distance in km" />
+
+    <EditText
+        android:id="@+id/etDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etFuel"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        android:hint="1.0"/>
+
+    <Button
+        android:id="@+id/btCalculate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CALCULATE"
+        android:layout_below="@id/tvDistance"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/tvOutput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:text="test"
+        android:paddingTop="30dp"
+        android:layout_below="@id/btCalculate"/>
+
+</RelativeLayout>

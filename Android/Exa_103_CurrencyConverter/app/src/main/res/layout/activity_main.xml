@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tvHeadline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:fontFamily="sans-serif-black"
+        android:gravity="top"
+        android:paddingVertical="20dp"
+        android:text="@string/headline"
+        android:textAlignment="center"
+        android:textColor="@color/orange"
+        android:textSize="30dp"
+        android:textStyle="italic" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="top"
+        android:gravity="top">
+
+        <TextView
+            android:id="@+id/tvCurrencyFrom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="top"
+            android:text="@string/eur"
+            android:textSize="25dp"
+            android:fontFamily="sans-serif-black"
+            android:textAlignment="center" />
+
+        <ImageButton
+            android:id="@+id/btConvert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="10dp"
+            android:src="@drawable/ic_autorenew_black_24dp"/>
+
+        <TextView
+            android:id="@+id/tvCurrencyTo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="top"
+            android:textSize="25dp"
+            android:textAlignment="center"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/usd" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/etInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.7"
+        android:hint="@string/hintEur"
+        android:layout_gravity="center"
+        android:inputType="numberDecimal"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/orange"
+        android:textColorLink="@color/orange"
+        android:autofillHints="@string/hintEur"/>
+
+    <TextView
+        android:id="@+id/tvOutput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:paddingVertical="20dp"
+        android:textSize="18dp"/>
+
+</LinearLayout>

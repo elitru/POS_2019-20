@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Exa_104_FuelConsumption</string>
+    <string name="consumption">Consumption: %d l/km</string>
+</resources>
