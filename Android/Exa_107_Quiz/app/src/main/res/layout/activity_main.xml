@@ -20,25 +20,29 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:shrinkColumns="0"
+        android:stretchColumns="*">
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="6"
+            android:layout_weight="1"
             android:layout_gravity="center">
 
             <TextView
                 android:id="@+id/tvQuestion"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="180dp"
                 android:textAlignment="center"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="12dp"
-                android:layout_marginBottom="6dp"
+                android:layout_marginBottom="-12dp"
                 android:text=""
                 android:lineHeight="35dp"
                 android:gravity="center"
                 android:textSize="20dp"
+                android:singleLine="false"
                 android:padding="10dp"
                 android:textColor="@color/dark"
                 android:background="@drawable/rounded_white" />
@@ -51,25 +55,26 @@
 
             <Button
                 android:id="@+id/btAnswer1"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight=".5"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="6dp"
                 android:layout_marginVertical="6dp"
                 android:textColor="@color/white"
-                android:onClick="onAnswerClick"
+                android:singleLine="false"
                 android:background="@drawable/rounded_light"
                 android:textAllCaps="false"/>
 
             <Button
                 android:id="@+id/btAnswer2"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight=".5"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginVertical="6dp"
+                android:singleLine="false"
                 android:textColor="@color/white"
                 android:background="@drawable/rounded_light"
                 android:textAllCaps="false"/>
@@ -83,11 +88,12 @@
 
             <Button
                 android:id="@+id/btAnswer3"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight=".5"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="6dp"
+                android:singleLine="false"
                 android:layout_marginVertical="6dp"
                 android:textColor="@color/white"
                 android:background="@drawable/rounded_light"
@@ -95,9 +101,10 @@
 
             <Button
                 android:id="@+id/btAnswer4"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight=".5"
+                android:singleLine="false"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginVertical="6dp"
@@ -176,6 +183,7 @@
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:enabled="false"
+                android:textAllCaps="true"
                 android:onClick="onDisplayQuestion"
                 android:textSize="20sp"/>
         </TableRow>

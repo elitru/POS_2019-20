@@ -33,13 +33,24 @@ public class IOHandler {
 
                 while ((line = input.readLine()) != null){
                     String[] data = line.split(";");
+
+                    Category category = Category.valueOf(data[0]);
+                    int correctAnswer = Integer.parseInt(data[6]);
+                    List<String> answers = new ArrayList<>();
+                    answers.add(data[2]);
+                    answers.add(data[3]);
+                    answers.add(data[4]);
+                    answers.add(data[5]);
+
+                    if(result.containsKey(category)){
+                        result.get(category).add(new Question(data[1], answers, correctAnswer));
+                        continue;
+                    }
+
                     List<Question> questions = new ArrayList<>();
+                    questions.add(new Question(data[1], answers, correctAnswer));
 
-                    Question q = new Question(data[1], Arrays.asList(new String[]{
-                            data[2], data[3], data[4], data[5]
-                    }), Integer.parseInt(data[6]));
-
-                    result.put(Category.valueOf(data[0]), questions);
+                    result.put(category, questions);
                 }
             }
             finally {

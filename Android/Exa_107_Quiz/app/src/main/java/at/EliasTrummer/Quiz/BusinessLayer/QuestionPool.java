@@ -1,6 +1,7 @@
 package at.EliasTrummer.Quiz.BusinessLayer;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ public class QuestionPool {
 
     public QuestionPool(Context context){
         questionPool = IOHandler.getQuestions(context);
+        //Toast.makeText(context, questionPool.get(Category.Sport).size() + "", Toast.LENGTH_LONG).show();
     }
 
     public List<Question> getQuestionsByCategory(Category category){
