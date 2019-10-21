@@ -19,4 +19,8 @@ public class QuestionPool {
     public List<Question> getQuestionsByCategory(Category category){
         return questionPool.get(category);
     }
+
+    public int amountCategories(){
+        return questionPool.size();
+    }
 }

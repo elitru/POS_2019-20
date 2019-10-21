@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -27,9 +28,11 @@ public class MainActivity extends AppCompatActivity {
     private Button btNext;
     private Button[] btAnswers;
 
+    private QuestionPool questionPool;
     private List<Question> questions;
     private int current = 0;
     private Category currentCategory;
+    private List<Category> usedCategories = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
+        questionPool = new QuestionPool(getApplicationContext());
+
         initQuestions();
     }
 
@@ -75,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
             //start again from scratch
             for(int i = 0; i < tvAnswered.length; i++){
                 tvAnswered[i].setBackground(getDrawable(R.drawable.rounded_slightly_transparent));
+            }
+
+            if(usedCategories.size() == questionPool.amountCategories()){
+                usedCategories.clear();
             }
 
             initQuestions();
@@ -123,15 +132,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initQuestions(){
-        QuestionPool questionPool = new QuestionPool(getApplicationContext());
-
         Category category;
 
         do{
             category = Category.values()[new Random().nextInt(Category.values().length)];
-        }while (currentCategory == category && currentCategory == null);
+        }while (usedCategories.contains(category) || category == currentCategory);
 
         currentCategory = category;
+        usedCategories.add(category);
 
         questions = questionPool.getQuestionsByCategory(category);
         tvCategory.setText("Kategorie: " + category.toString());
