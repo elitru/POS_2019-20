@@ -2,6 +2,7 @@ package at.EliasTrummer.Quiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -34,10 +35,15 @@ public class MainActivity extends AppCompatActivity {
     private Category currentCategory;
     private List<Category> usedCategories = new ArrayList<>();
 
+    private Intent chooseCategory;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        chooseCategory = new Intent(this, CategoryActivity.class);
+        startActivity(chooseCategory);
 
         tvCategory = findViewById(R.id.tvCategory);
         tvQuestion = findViewById(R.id.tvQuestion);
