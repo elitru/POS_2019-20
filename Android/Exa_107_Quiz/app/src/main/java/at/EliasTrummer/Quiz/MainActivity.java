@@ -23,30 +23,30 @@ import at.EliasTrummer.Quiz.BusinessLayer.QuestionPool;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView tvCategory;
-    private TextView tvQuestion;
-    private TextView[] tvAnswered;
-    private Button btNext;
-    private Button[] btAnswers;
+    private static TextView tvCategory;
+    private static TextView tvQuestion;
+    private static TextView[] tvAnswered;
+    private static Button btNext;
+    private static Button[] btAnswers;
 
-    private QuestionPool questionPool;
-    private List<Question> questions;
-    private int current = 0;
-    private Category currentCategory;
-    private List<Category> usedCategories = new ArrayList<>();
+    private static QuestionPool questionPool;
+    private static List<Question> questions;
+    private static int current = 0;
+    private static Category currentCategory;
+    private static List<Category> usedCategories = new ArrayList<>();
 
     private Intent chooseCategory;
+
+    private static MainActivity main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        chooseCategory = new Intent(this, CategoryActivity.class);
-        startActivity(chooseCategory);
+        main = this;
 
-        tvCategory = findViewById(R.id.tvCategory);
-        tvQuestion = findViewById(R.id.tvQuestion);
+        showCategoryChooser();
 
         tvAnswered = new TextView[]{
             findViewById(R.id.tvAnweredQuestion1),
@@ -75,9 +75,15 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-        questionPool = new QuestionPool(getApplicationContext());
+        tvCategory = findViewById(R.id.tvCategory);
+        tvQuestion = findViewById(R.id.tvQuestion);
 
-        initQuestions();
+        questionPool = new QuestionPool(getApplicationContext());
+    }
+
+    private void showCategoryChooser(){
+        chooseCategory = new Intent(this, CategoryActivity.class);
+        startActivity(chooseCategory);
     }
 
     public void onDisplayQuestion(View view){
@@ -87,80 +93,62 @@ public class MainActivity extends AppCompatActivity {
             for(int i = 0; i < tvAnswered.length; i++){
                 tvAnswered[i].setBackground(getDrawable(R.drawable.rounded_slightly_transparent));
             }
-
-            if(usedCategories.size() == questionPool.amountCategories()){
-                usedCategories.clear();
-            }
-
-            initQuestions();
-            enableAnswers();
             btNext.setEnabled(false);
-            btNext.setText("weiter");
+
+            showCategoryChooser();
+
             return;
         }
 
         current++;
 
-        loadQuestion(current);
+        loadQuestion();
         enableAnswers();
         btNext.setEnabled(false);
-
-        if((current + 1) == questions.size()){
-            //next question is last one
-            btNext.setText("Neustart");
-        }
     }
 
-    public void onAnswerClick(View view, int answerIndex){
+    public static void onAnswerClick(View view, int answerIndex){
         if(answerIndex == questions.get(current).getCorrectAnswer()){
-            ((Button)view).setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.green)));
-            tvAnswered[current].setBackground(getDrawable(R.drawable.rounded_green));
+            ((Button)view).setBackgroundTintList(ColorStateList.valueOf(main.getColor(R.color.green)));
+            tvAnswered[current].setBackground(main.getDrawable(R.drawable.rounded_green));
         }else{
-            ((Button)view).setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.red)));
-            btAnswers[questions.get(current).getCorrectAnswer() - 1].setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.green)));
-            tvAnswered[current].setBackground(getDrawable(R.drawable.rounded_red));
+            ((Button)view).setBackgroundTintList(ColorStateList.valueOf(main.getColor(R.color.red)));
+            btAnswers[questions.get(current).getCorrectAnswer() - 1].setBackgroundTintList(ColorStateList.valueOf(main.getColor(R.color.green)));
+            tvAnswered[current].setBackground(main.getDrawable(R.drawable.rounded_red));
         }
 
         disableAnswers();
         btNext.setEnabled(true);
     }
 
-    private void enableAnswers(){
+    private static void enableAnswers(){
         for(int i = 0; i < btAnswers.length; i++){
             btAnswers[i].setEnabled(true);
         }
     }
 
-    private void disableAnswers(){
+    private static void disableAnswers(){
         for(int i = 0; i < btAnswers.length; i++){
             btAnswers[i].setEnabled(false);
         }
     }
 
-    private void initQuestions(){
-        Category category;
-
-        do{
-            category = Category.values()[new Random().nextInt(Category.values().length)];
-        }while (usedCategories.contains(category) || category == currentCategory);
-
-        currentCategory = category;
-        usedCategories.add(category);
-
-        questions = questionPool.getQuestionsByCategory(category);
-        tvCategory.setText("Kategorie: " + category.toString());
-        current = 0;
-
-        //load first question
-        loadQuestion(current);
-    }
-
-    private void loadQuestion(int id){
+    private static void loadQuestion(){
         tvQuestion.setText(questions.get(current).getQuestion());
 
         for(int i = 0; i < btAnswers.length; i++){
             btAnswers[i].setText(questions.get(current).getAnswers().get(i));
-            btAnswers[i].setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.dark)));
+            btAnswers[i].setBackgroundTintList(ColorStateList.valueOf(main.getColor(R.color.dark)));
         }
+    }
+
+    public static void setCategory(Category category){
+        currentCategory = category;
+
+        enableAnswers();
+        tvCategory.setText(category.toString());
+        questions = questionPool.getQuestionsByCategory(category);
+        current = 0;
+        loadQuestion();
     }
 }
