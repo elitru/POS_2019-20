@@ -14,7 +14,6 @@ public class QuestionPool {
 
     public QuestionPool(Context context){
         questionPool = IOHandler.getQuestions(context);
-        //Toast.makeText(context, questionPool.get(Category.Sport).size() + "", Toast.LENGTH_LONG).show();
     }
 
     public List<Question> getQuestionsByCategory(Category category){
