@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">HappyIndicator</string>
+    <string name="happiness_indicator">Happiness indicator</string>
+    <string name="happiness_value">Happiness: %d</string>
+    <string name="name">Name:</string>
+    <string name="send">Send</string>
+</resources>
