@@ -3,6 +3,7 @@ package at.EliasTrummer.Theory;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class ListCompTest {
     public static void main(String[] args) {
@@ -23,5 +24,12 @@ public class ListCompTest {
                 return o1.getLastname().compareTo(o2.getLastname());
             }
         });*/
+
+        students.removeIf(new Predicate<Student>() {
+            @Override
+            public boolean test(Student student) {
+                return false;
+            }
+        })
     }
 }
