@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".EditContact">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="20dp"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textColor="#222"
+        android:text="Edit Contact"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:hint="Firstname"
+        android:paddingHorizontal="10dp"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/etFirstname" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:hint="Lastname"
+        android:paddingHorizontal="10dp"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/etLastname" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:hint="Phone Number"
+        android:paddingHorizontal="10dp"
+        android:textSize="20sp"
+        android:inputType="phone"
+        android:layout_marginTop="20dp"
+        android:id="@+id/etPhone" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:hint="Language"
+        android:paddingHorizontal="10dp"
+        android:textSize="20sp"
+        android:inputType="phone"
+        android:layout_marginTop="20dp"
+        android:id="@+id/etLanguage" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbMale"
+            android:text="Male"
+            android:layout_marginLeft="30dp"
+            android:checked="true" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbFemale"
+            android:text="Female"
+            android:layout_marginLeft="30dp"
+            android:checked="false" />
+
+    </RadioGroup>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="15dp"
+        android:textColor="#fff"
+        android:background="@color/colorPrimary"
+        android:text="Save"
+        android:layout_marginTop="50dp"
+        android:layout_marginHorizontal="30dp"
+        android:id="@+id/btSave" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="15dp"
+        android:textColor="#fff"
+        android:background="@color/colorAccent"
+        android:text="Cancel"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/btCancel" />
+
+</LinearLayout>

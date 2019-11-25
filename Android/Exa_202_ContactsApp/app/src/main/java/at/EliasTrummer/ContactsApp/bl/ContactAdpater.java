@@ -26,10 +26,16 @@ import at.EliasTrummer.ContactsApp.utils.IOHandler;
 
 public class ContactAdpater extends RecyclerView.Adapter<ContactViewHolder> {
 
+    private static ContactAdpater contactAdpater;
+
     private List<Contact> allContacts = IOHandler.getContacts();
     private List<Contact> filteredContacts = new ArrayList<Contact>(){{
        addAll(allContacts);
     }};
+
+    public ContactAdpater() {
+        contactAdpater = this;
+    }
 
     @NonNull
     @Override
@@ -47,8 +53,8 @@ public class ContactAdpater extends RecyclerView.Adapter<ContactViewHolder> {
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
 
         Contact contact = filteredContacts.get(position);
-
         holder.getTvContactName().setText(contact.getLastname() + ", " + contact.getFirstname());
+        holder.setContact(contact);
 
         Picasso.get().load(contact.getPicture()).into(holder.getIvContactPicture());
     }
@@ -70,5 +76,19 @@ public class ContactAdpater extends RecyclerView.Adapter<ContactViewHolder> {
             }
         });
         this.notifyDataSetChanged();
+    }
+
+    private Contact getContactByID(String id){
+        for(int i = 0; i < filteredContacts.size(); i++){
+            if(filteredContacts.get(i).getId() == Integer.parseInt(id)){
+                return filteredContacts.get(i);
+            }
+        }
+
+        return  null;
+    }
+
+    public static void update(){
+        contactAdpater.notifyDataSetChanged();
     }
 }

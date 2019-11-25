@@ -16,6 +16,8 @@ import at.EliasTrummer.ContactsApp.utils.IOHandler;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static MainActivity main;
+
     private RecyclerView rvList;
     private ContactAdpater adpater;
 
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        main = this;
 
         IOHandler.init(getApplicationContext());
 

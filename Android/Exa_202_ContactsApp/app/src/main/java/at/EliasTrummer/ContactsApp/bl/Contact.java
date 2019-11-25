@@ -19,7 +19,7 @@ public class Contact {
         this.firstname = parts[2];
         this.lastname = parts[1];
         this.language = parts[3];
-        this.gender = parts[4].charAt(0);
+        this.gender = parts[4].toLowerCase().charAt(0);
         this.picture = parts[5];
         this.phoneNumber = parts[6];
     }
