@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="10dp"
+    android:paddingHorizontal="20dp"
+    android:background="@drawable/rounded"
+    android:id="@+id/container"
+    android:layout_marginHorizontal="20dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Giro-Account"
+            android:id="@+id/tvAccount"
+            android:textColor="#2196F3"
+            android:textStyle="bold"
+            android:paddingVertical="10dp"
+            android:textSize="30sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="AT29-5656-4545-3345-4343"
+            android:id="@+id/tvIBAN"
+            android:textColor="#777"
+            android:textAllCaps="true"
+            android:textStyle="normal"
+            android:paddingVertical="0dp"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="€ 16 869,20"
+            android:id="@+id/tvBalance"
+            android:textColor="#4CAF50"
+            android:textAlignment="textEnd"
+            android:paddingRight="10dp"
+            android:textStyle="bold"
+            android:paddingVertical="10dp"
+            android:textSize="30sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#999" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:paddingTop="5dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Available: "
+                android:textColor="#555"
+                android:textStyle="normal"
+                android:paddingVertical="0dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="€ 18 869,20"
+                android:textColor="#555"
+                android:id="@+id/tvAvailable"
+                android:textStyle="normal"
+                android:paddingVertical="0dp"
+                android:layout_alignParentEnd="true"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
