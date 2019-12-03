@@ -10,8 +10,8 @@ public class StudentAccount extends Account {
     }
 
     public StudentAccount(String param){
-        super(null, 0, 0);
-        //TODO:
+        super(param.split(",")[2], Double.parseDouble(param.split(",")[3]), Float.parseFloat(param.split(",")[6]));
+        this.debitCard = Boolean.parseBoolean(param.split(",")[5]);
     }
 
     public boolean isDebitCard() {

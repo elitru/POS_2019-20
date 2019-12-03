@@ -37,7 +37,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountViewHolder> {
         TextView tvAccount = view.findViewById(R.id.tvAccount),
                 tvBalance = view.findViewById(R.id.tvBalance),
                 tvIBAN = view.findViewById(R.id.tvBalance),
-                tvAvailable = view.findViewById(R.id.tvBalance);
+                tvAvailable = view.findViewById(R.id.tvAvailable);
 
         return new AccountViewHolder(view, container, tvAccount, tvBalance, tvIBAN, tvAvailable);
     }
@@ -50,21 +50,42 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountViewHolder> {
             holder.getTvIBAN().setText("IBAN: " + acc.getIban());
             holder.getTvBalance().setText("€ " + String.format("%,10.2f", acc.getBalance()));
             holder.getTvAvailable().setText("€ " + String.format("%,10.2f", acc.getBalance()));
-
-            if(acc.getBalance() < 0){
-                holder.getTvBalance().setTextColor(MainActivity.main.getColor(R.color.red));
-            }
         }else{
             GiroAccount acc = (GiroAccount)filtered.get(position);
             holder.getTvAccount().setText("Giro-Account");
             holder.getTvIBAN().setText("IBAN: " + acc.getIban());
             holder.getTvBalance().setText("€ " + String.format("%,10.2f", acc.getBalance()));
-            holder.getTvAvailable().setText("€ " + String.format("%,10.2f", acc.getBalance()));
+            holder.getTvAvailable().setText("€ " + String.format("%,10.2f", (
+                    acc.getBalance() > 0 ? acc.getBalance() + acc.getOverdraft() : acc.getOverdraft() - acc.getBalance())));
+
+            if(acc.getBalance() < 0){
+                holder.getTvBalance().setTextColor(MainActivity.main.getColor(R.color.red));
+            }else{
+                holder.getTvBalance().setTextColor(MainActivity.main.getColor(R.color.green));
+            }
         }
     }
 
     @Override
     public int getItemCount() {
         return filtered.size();
+    }
+
+    public void filterAccount(String filter){
+        filtered.clear();
+        filtered.addAll(all);
+
+        if(filter == null){
+            notifyDataSetChanged();
+            return;
+        }
+
+        if(filter.equals("students")){
+            filtered.removeIf(v -> v instanceof GiroAccount);
+        }else{
+            filtered.removeIf(v -> v instanceof StudentAccount);
+        }
+
+        notifyDataSetChanged();
     }
 }

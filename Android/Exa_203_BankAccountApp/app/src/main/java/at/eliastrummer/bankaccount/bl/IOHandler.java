@@ -18,21 +18,23 @@ public class IOHandler {
 
     public static List<Account> getAccounts(){
 
+        List<Account> result = null;
+
         try {
-            List<Account> result = new BufferedReader(new InputStreamReader(ctx.getAssets().open("account_data.csv")))
+           result = new BufferedReader(new InputStreamReader(ctx.getAssets().open("account_data.csv")))
                             .lines()
                             .skip(1)
                             .map(line -> {
                                 if(line.split(",")[1].toUpperCase().equals("GIRO")){
-                                    return new GiroAccount(s);
+                                    return new GiroAccount(line);
                                 }else{
-                                    return new StudentAccount(s);
+                                    return new StudentAccount(line);
                                 }
                             }).collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return null;
+        return result;
     }
 }

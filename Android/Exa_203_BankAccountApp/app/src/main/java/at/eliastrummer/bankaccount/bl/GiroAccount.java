@@ -12,8 +12,8 @@ public class GiroAccount extends Account{
     }
 
     public GiroAccount(String param){
-        super(null, 0, 0);
-        //TODO:
+        super(param.split(",")[2], Double.parseDouble(param.split(",")[3]), Float.parseFloat(param.split(",")[6]));
+        this.overdraft = Double.parseDouble(param.split(",")[4]);
     }
 
     public double getOverdraft() {
