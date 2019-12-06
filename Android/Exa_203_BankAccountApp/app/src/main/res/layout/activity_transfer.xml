@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="#F5DE63"
+    tools:context=".Transfer">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Transaction"
+        android:textAlignment="center"
+        android:textSize="32sp"
+        android:paddingVertical="10dp"
+        android:textStyle="bold"
+        android:textColor="#555" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="20dp"
+        android:background="@drawable/rounded"
+        android:id="@+id/container"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingBottom="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Giro-Account"
+                android:id="@+id/tvAccount"
+                android:textColor="#D5C709"
+                android:textStyle="bold"
+                android:paddingVertical="10dp"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="AT29-5656-4545-3345-4343"
+                android:id="@+id/tvIBANTransferData"
+                android:textColor="#777"
+                android:textAllCaps="true"
+                android:textStyle="normal"
+                android:paddingVertical="0dp"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="€ 16 869,20"
+                android:id="@+id/tvBalanceTransferData"
+                android:textColor="@color/green"
+                android:textAlignment="textEnd"
+                android:paddingRight="10dp"
+                android:textStyle="bold"
+                android:paddingVertical="10dp"
+                android:textSize="30sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#999" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:paddingTop="5dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Available: "
+                    android:textColor="#555"
+                    android:textStyle="normal"
+                    android:paddingVertical="0dp"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="€ 18 869,20"
+                    android:textColor="#555"
+                    android:id="@+id/tvAvailableData"
+                    android:textStyle="normal"
+                    android:paddingVertical="0dp"
+                    android:layout_alignParentEnd="true"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_arrow_downward_black_24dp"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="20dp"
+        android:background="@drawable/rounded"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Transfer To"
+                android:textColor="#D5C709"
+                android:textStyle="bold"
+                android:paddingVertical="10dp"
+                android:textSize="22sp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:textColor="#666"
+                        android:id="@+id/tvIBANTransfer"
+                        android:text="IBAN: " />
+
+                    <AutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:hint=""
+                        android:textColor="#777"
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/tvIBANTransferValue"
+                        android:layout_alignBaseline="@id/tvIBANTransfer"
+                        android:layout_toRightOf="@id/tvIBANTransfer" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:textColor="#666"
+                        android:id="@+id/tvAmount"
+                        android:layout_below="@id/tvIBANTransfer"
+                        android:layout_marginTop="30dp"
+                        android:text="Amount: " />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:text="0,00"
+                        android:inputType="numberDecimal"
+                        android:id="@+id/tvAmountValue"
+                        android:textColor="#3F51B5"
+                        android:textStyle="bold"
+                        android:textSize="25sp"
+                        android:textAlignment="textEnd"
+                        android:paddingRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_alignBaseline="@id/tvAmount"
+                        android:layout_toRightOf="@id/tvAmount" />
+
+                </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Transfer now"
+        android:textAllCaps="true"
+        android:paddingHorizontal="10dp"
+        android:background="@color/grey"
+        android:textColor="#fff"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:onClick="onSubmitTransfer"
+        android:id="@+id/tvSubmitTransfer"
+        android:enabled="false" />
+
+</LinearLayout>

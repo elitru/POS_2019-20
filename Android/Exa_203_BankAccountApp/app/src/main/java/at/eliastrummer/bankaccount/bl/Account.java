@@ -1,6 +1,9 @@
 package at.eliastrummer.bankaccount.bl;
 
-public class Account {
+import android.os.Parcel;
+import java.io.Serializable;
+
+public class Account implements Serializable {
 
     protected String iban;
     protected double balance;

@@ -1,6 +1,8 @@
 package at.eliastrummer.bankaccount.bl;
 
-public class StudentAccount extends Account {
+import java.io.Serializable;
+
+public class StudentAccount extends Account implements Serializable {
 
     private boolean debitCard;
 

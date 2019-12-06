@@ -1,14 +1,18 @@
 package at.eliastrummer.bankaccount;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import at.eliastrummer.bankaccount.bl.Account;
 import at.eliastrummer.bankaccount.bl.IOHandler;
 import at.eliastrummer.bankaccount.list.AccountAdapter;
 
@@ -25,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         main = this;
-
         IOHandler.init(getApplication());
 
         accountAdapter = new AccountAdapter();
@@ -58,5 +61,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 1 && resultCode == 2){
+            Account acc = (Account)data.getSerializableExtra("account");
+            double amount = Double.parseDouble(data.getStringExtra("amount"));
+            String iban = data.getStringExtra("iban");
+            accountAdapter.transfer(acc.getIban(), amount, iban);
+        }
     }
 }

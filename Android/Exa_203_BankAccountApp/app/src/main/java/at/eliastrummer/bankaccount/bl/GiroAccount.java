@@ -2,7 +2,9 @@ package at.eliastrummer.bankaccount.bl;
 
 import androidx.annotation.NonNull;
 
-public class GiroAccount extends Account{
+import java.io.Serializable;
+
+public class GiroAccount extends Account implements Serializable {
 
     private double overdraft;
 
