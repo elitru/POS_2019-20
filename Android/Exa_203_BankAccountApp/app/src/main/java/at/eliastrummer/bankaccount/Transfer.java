@@ -124,8 +124,11 @@ public class Transfer extends AppCompatActivity {
 
                     if(available - amount < 0){
                         disable();
+                        ((TextView)findViewById(R.id.tvBalanceTransferData)).setTextColor(getColor(R.color.red));
                         return;
                     }
+
+                    ((TextView)findViewById(R.id.tvBalanceTransferData)).setTextColor(getColor(R.color.green));
 
                     enable();
                 }
