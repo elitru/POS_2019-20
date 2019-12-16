@@ -21,7 +21,7 @@ public class GameManager {
         generateValue();
     }
 
-    public void makeMode(){
+    public void makeMove(){
 
     }
 
