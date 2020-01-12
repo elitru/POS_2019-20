@@ -1,13 +1,17 @@
-package at.eliastrummer.exa_205_game2048.game;
+package main;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
-import at.eliastrummer.exa_205_game2048.utils.Direction;
-
 public class GameManager {
+    public static void main(String[] args) {
+        GameManager manager = new GameManager();
+        System.out.println("=============================================");
+        boolean result = manager.makeMove(Direction.TOP);
+        manager.print();
+    }
 
     private static final Random RANDOM = new Random();
     private static final int[] NUMBERS = {
@@ -20,10 +24,16 @@ public class GameManager {
 
     public GameManager(){
         reset();
+        print();
     }
 
-    public int getValue(int x, int y){
-        return values[y][x];
+    public void print(){
+        for(int i = 0; i < values.length; i++){
+            for(int i2 = 0; i2 < values[i].length; i2++){
+                System.out.printf(values[i][i2] + " ");
+            }
+            System.out.printf("\n");
+        }
     }
 
     public boolean makeMove(Direction direction){
@@ -98,9 +108,8 @@ public class GameManager {
             return false;
         }
 
-        if(hasMergedOccured){
-            generateValue();
-        }
+        generateValue();
+
         return true;
     }
 
@@ -114,10 +123,6 @@ public class GameManager {
         values = new int[4][4];
         generateValue();
         generateValue();
-    }
-
-    public int getPoints() {
-        return points;
     }
 
     public boolean generateValue(){
@@ -219,9 +224,73 @@ public class GameManager {
                 }
                 break;
         }
+        /*switch (direction) {
+            case RIGHT:
+                for(int i = values[y].length - 1; i >= x && i >= 1; i--){
+                    values[y][i] = values[y][i - 1];
+                }
+                break;
+
+            case LEFT:
+                for(int i = x; i < values[y].length - 1; i++){
+                    values[y][i] = values[y][i + 1];
+                }
+                break;
+
+            case BOTTOM:
+                for(int i = values.length - 1; i >= y && i >= 1; i--){
+                    values[i][x] = values[i - 1][x];
+                }
+                break;
+
+            case TOP:
+                for(int i = y; i < values.length - 1; i++){
+                    values[i][x] = values[i + 1][x];
+                }
+                break;
+        }*/
     }
 
     private int getRandomNumber(){
         return NUMBERS[RANDOM.nextInt(NUMBERS.length)];
+    }
+}
+
+enum Direction {
+    TOP,
+    RIGHT,
+    BOTTOM,
+    LEFT
+}
+
+class Point {
+    private final int x;
+    private final int y;
+
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Point)) return false;
+        Point point = (Point) o;
+        return getX() == point.getX() &&
+                getY() == point.getY();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getX(), getY());
     }
 }

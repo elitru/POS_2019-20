@@ -10,7 +10,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import at.eliastrummer.exa_205_game2048.game.GameManager;
+import at.eliastrummer.exa_205_game2048.utils.ColorScheme;
 import at.eliastrummer.exa_205_game2048.utils.Direction;
 import at.eliastrummer.exa_205_game2048.utils.OnSwipeTouchListener;
 
@@ -20,7 +23,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvPoints;
     private TableLayout tlContainer;
 
-    private Button[] buttons = new Button[15];
+    private Button[][] buttons = new Button[4][4];
+    private GameManager gameManager = new GameManager();
+
+    private boolean gameStatus = true;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -32,11 +38,24 @@ public class MainActivity extends AppCompatActivity {
         tvPoints = findViewById(R.id.tvPoints);
         tlContainer = findViewById(R.id.tlContainer);
 
+        tvPoints.setText("Points\n0");
+
         tlContainer.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this){
             @Override
             public void onSwipe(Direction direction) {
                 super.onSwipe(direction);
 
+                if(!gameStatus){
+                    return;
+                }
+
+                gameStatus = gameManager.makeMove(direction);
+                setButtonContent();
+                tvPoints.setText("Points\n" + gameManager.getPoints());
+
+                if(!gameStatus){
+                    Toast.makeText(getApplicationContext(), "Game Over", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -44,12 +63,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initButtons(){
-        for(int i = 0; i < buttons.length; i++){
-            buttons[i] = findViewById(getResources().getIdentifier("btNum" + (i + 1), "id", getPackageName()));
+        for(int i = 0; i < 16; i++){
+            buttons[i / 4][i % 4] = findViewById(getResources().getIdentifier("btNum" + (i + 1), "id", getPackageName()));
+        }
+
+        setButtonContent();
+    }
+
+    private void setButtonContent(){
+        for(int y = 0; y < buttons.length; y++){
+            for(int x = 0; x < buttons[y].length; x++){
+                int value = gameManager.getValue(x, y);
+                buttons[y][x].setText(value + "");
+                buttons[y][x].setBackgroundColor(ColorScheme.valueOf("C" + value).getBackgroundColor());
+                buttons[y][x].setTextColor(ColorScheme.valueOf("C" + value).getFontColor());
+            }
         }
     }
 
-    private boolean onSwipe(View view, MotionEvent evt){
-        return true;
+    public void onReset(View view) {
+        gameManager.reset();
+        gameStatus = true;
+        tvPoints.setText("Points\n0");
+        setButtonContent();
     }
 }
