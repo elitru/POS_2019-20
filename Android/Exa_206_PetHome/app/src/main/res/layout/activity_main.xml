@@ -1,11 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:background="#8BC34A">
 
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pet Home"
+        android:textSize="40sp"
+        android:textColor="#000"
+        android:layout_marginBottom="50dp"
+        android:textAlignment="center" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageButton
+        android:layout_width="170dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:src="@drawable/ic_dog_1710298"
+        android:background="#FFEB3B"
+        android:scaleType="fitCenter"
+        android:id="@+id/btOnLoadBogs"
+        android:onClick="onShowDogs"
+        android:layout_height="170dp" />
+
+    <ImageButton
+        android:layout_width="170dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:src="@drawable/ic_cat_1294968"
+        android:background="#FFC107"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="50dp"
+        android:id="@+id/btOnLoadCats"
+        android:onClick="onShowCats"
+        android:layout_height="170dp" />
+
+</LinearLayout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@drawable/rounded"
+    android:backgroundTint="#00BCD4">
+
+    <ImageView
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:id="@+id/ivImage"
+        android:background="transparent"
+        android:src="@drawable/ic_dog_1710298"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvName"
+        android:text="Frederica"
+        android:textSize="25sp"
+        android:textColor="#000"
+        android:paddingLeft="30dp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@id/ivImage"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvBirthdate"
+        android:text="23-01-2015"
+        android:textSize="18sp"
+        android:textColor="#000"
+        android:paddingLeft="30dp"
+        android:layout_toRightOf="@id/ivImage"
+        android:layout_below="@id/tvName"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvData"
+        android:text="Size: small"
+        android:textSize="18sp"
+        android:textColor="#000"
+        android:paddingLeft="30dp"
+        android:layout_toRightOf="@id/ivImage"
+        android:layout_below="@id/tvBirthdate"/>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_boy_2024649"
+        android:scaleType="fitCenter"
+        android:id="@+id/ivGender"
+        android:layout_alignParentRight="true" />
+
+</RelativeLayout>
