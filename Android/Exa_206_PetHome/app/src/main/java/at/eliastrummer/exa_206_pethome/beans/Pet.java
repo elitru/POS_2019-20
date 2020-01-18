@@ -1,8 +1,9 @@
 package at.eliastrummer.exa_206_pethome.beans;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Pet {
+public class Pet implements Serializable {
     private String name;
     private LocalDate dateOfBirth;
     private Gender gender;

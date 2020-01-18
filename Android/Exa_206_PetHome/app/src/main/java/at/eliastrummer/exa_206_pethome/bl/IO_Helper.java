@@ -23,13 +23,13 @@ public class IO_Helper {
     }
 
     public static List<Pet> loadPets(){
-        List<Pet> pets = null;
+        List<Pet> pets = new ArrayList<>();
 
         try {
             InputStream inputStream = ctx.getAssets().open("pets.csv");
 
             new BufferedReader(new InputStreamReader(inputStream))
-                    .lines().forEach(line -> {
+                    .lines().skip(1).forEach(line -> {
                         if(line.split(",")[0].equalsIgnoreCase("dog")){
                             pets.add(new Dog(line.split(",")));
                         }else{
