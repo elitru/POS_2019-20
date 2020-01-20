@@ -29,21 +29,21 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void onShowDogs(View view) {
-        Intent intent = new Intent();
+        Intent intent = new Intent(this.getApplicationContext(), PetList.class);
         intent.putExtra("pets", getDogs());
         intent.putExtra("type", "Dog List");
-        startActivity(intent);
+        this.getApplicationContext().startActivity(intent);
     }
 
     public void onShowCats(View view) {
-        Intent intent = new Intent();
+        Intent intent = new Intent(this.getApplicationContext(), PetList.class);
         intent.putExtra("pets", getCats());
         intent.putExtra("type", "Cat List");
-        startActivity(intent);
+        this.getApplicationContext().startActivity(intent);
     }
 
     private ArrayList<Dog> getDogs() {
-        final ArrayList<Dog> dogs = new ArrayList<>();
+        final ArrayList<Dog> dogs = new ArrayList<Dog>();
 
         allPets.forEach(pet -> {
             if(pet instanceof Dog){
@@ -54,12 +54,12 @@ public class MainActivity extends AppCompatActivity {
         return dogs;
     }
 
-    private ArrayList<Dog> getCats() {
-        final ArrayList<Dog> cats = new ArrayList<>();
+    private ArrayList<Cat> getCats() {
+        final ArrayList<Cat> cats = new ArrayList<Cat>();
 
         allPets.forEach(pet -> {
             if(pet instanceof Cat){
-                cats.add(((Dog)pet));
+                cats.add(((Cat)pet));
             }
         });
 

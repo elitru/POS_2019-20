@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -19,14 +20,14 @@ public class PetList extends AppCompatActivity {
 
     private PetAdapter adapter;
     private RecyclerView rvPetList;
-    private List<Pet> pets;
+    private ArrayList<Pet> pets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_list);
         this.rvPetList = findViewById(R.id.rvPetList);
-        pets = (List<Pet>) this.getIntent().getSerializableExtra("pets");
+        pets = (ArrayList<Pet>) this.getIntent().getSerializableExtra("pets");
 
         if(pets.get(0) instanceof Dog){
             pets.sort((d1, d2) -> {
@@ -44,6 +45,6 @@ public class PetList extends AppCompatActivity {
         rvPetList.setLayoutManager(new LinearLayoutManager(this.getApplicationContext()));
         rvPetList.setAdapter(adapter);
 
-        ((TextView)findViewById(R.id.rvPetList)).setText(getIntent().getStringExtra("type"));
+        ((TextView)findViewById(R.id.tvListType)).setText(getIntent().getStringExtra("type"));
     }
 }

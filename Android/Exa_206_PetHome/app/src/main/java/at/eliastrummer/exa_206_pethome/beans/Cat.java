@@ -14,7 +14,7 @@ public class Cat extends Pet implements Serializable {
     private CatColor color;
     private transient Uri pictureUri;
 
-    private static final long serialVersionUID = 1234567890L;
+    private static final long serialVersionUID = 01L;
 
     public Cat(String name, LocalDate dateOfBirth, Gender gender, CatColor color, Uri pictureUri) {
         super(name, dateOfBirth, gender);
@@ -23,7 +23,7 @@ public class Cat extends Pet implements Serializable {
     }
 
     public Cat(String[] param) {
-        super(param[1], LocalDate.parse(param[2], DateTimeFormatter.ofPattern("dd/MM/yyyy")), Gender.valueOf(param[3].toUpperCase()));
+        super(param[1], LocalDate.parse(param[3], DateTimeFormatter.ofPattern("MM/dd/yyyy")), Gender.valueOf(param[2].toUpperCase()));
         this.color = CatColor.valueOf(param[5].toUpperCase());
         this.pictureUri = Uri.parse(param[6]);
     }

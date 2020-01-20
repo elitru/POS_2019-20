@@ -8,8 +8,8 @@ public enum CatColor {
     RED,
     CINNAMON,
     FAWN,
-    CHOCOLOATE,
-    APPRICOT,
+    CHOCOLATE,
+    APRICOT,
     AMBER;
 
 }
