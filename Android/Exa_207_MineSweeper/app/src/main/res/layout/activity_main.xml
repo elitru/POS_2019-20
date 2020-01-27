@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:background="@color/yellow"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="top"
+        android:gravity="top"
+        android:background="@color/dark_green"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="#fff"
+            android:text="5"
+            android:textSize="23dp"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/tvMines" />
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/yellow"
+            android:layout_gravity="center"
+            android:background="@drawable/restart" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="#fff"
+            android:text="01:10"
+            android:textSize="23dp"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/tvTime" />
+
+    </LinearLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:foregroundGravity="center"
+        android:background="@color/green_hover"
+        android:columnCount="9"
+        android:rowCount="9"
+        android:id="@+id/glField" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="bottom|center"
+        android:gravity="bottom|center"
+        android:background="@color/dark_green"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:background="@drawable/flag"
+            android:id="@+id/btMark"
+            android:backgroundTint="@color/red" />
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:background="@drawable/play"
+            android:id="@+id/btTry"
+            android:layout_marginLeft="50dp"
+            android:backgroundTint="#eee" />
+
+    </LinearLayout>
+
+</LinearLayout>
