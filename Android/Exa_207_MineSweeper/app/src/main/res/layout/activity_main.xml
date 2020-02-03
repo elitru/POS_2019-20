@@ -76,6 +76,8 @@
             android:layout_gravity="center"
             android:background="@drawable/flag"
             android:id="@+id/btMark"
+            android:alpha="0.5"
+            android:onClick="onUseModeFlag"
             android:backgroundTint="@color/red" />
 
         <ImageButton
@@ -86,6 +88,7 @@
             android:background="@drawable/play"
             android:id="@+id/btTry"
             android:layout_marginLeft="50dp"
+            android:onClick="onUseModeHit"
             android:backgroundTint="#eee" />
 
     </LinearLayout>

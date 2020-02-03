@@ -21,7 +21,7 @@ public class Node {
         return isBomb;
     }
 
-    public void setBomb(boolean bomb) {
+    protected void setBomb(boolean bomb) {
         isBomb = bomb;
     }
 
@@ -29,7 +29,7 @@ public class Node {
         return isHit;
     }
 
-    public void setHit(boolean hit) {
+    protected void setHit(boolean hit) {
         isHit = hit;
     }
 
@@ -37,7 +37,7 @@ public class Node {
         return isMarked;
     }
 
-    public void setMarked(boolean marked) {
+    protected void setMarked(boolean marked) {
         isMarked = marked;
     }
 }
