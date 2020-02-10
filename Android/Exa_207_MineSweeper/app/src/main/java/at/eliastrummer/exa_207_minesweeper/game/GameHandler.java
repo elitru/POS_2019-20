@@ -8,6 +8,8 @@ import java.util.Set;
 
 public class GameHandler {
 
+    private int markedCounter = 0;
+
     public static void main(String[] args) {
         GameHandler gh = new GameHandler(9, 9, 40);
         gh.print();
@@ -102,10 +104,17 @@ public class GameHandler {
             }
         }
 
-        return rightBombMarkedCount == amountBombs;
+        return rightBombMarkedCount == amountBombs && markedCounter == amountBombs;
     }
 
     public boolean changeNodeMarkedState(int x, int y){
+
+        if(field[y][x].isMarked()){
+            markedCounter--;
+        }else{
+            markedCounter++;
+        }
+
         field[y][x].setMarked(!field[y][x].isMarked());
         return isFinished();
     }
@@ -157,5 +166,9 @@ public class GameHandler {
                 field[y][x] = node;
             }
         }
+    }
+
+    public int getAmountMarked() {
+        return this.markedCounter;
     }
 }

@@ -33,6 +33,7 @@ public class Test {
     }
 }
 
-class TestClass{
+class TestClass implements Serializable{
     private int i;
+
 }

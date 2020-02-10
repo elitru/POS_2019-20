@@ -9,4 +9,7 @@
     <color name="green_light">#AAD751</color>
     <color name="green_very_light">#A2D149</color>
     <color name="green_hover">#BFE17D</color>
+    <color name="hit_2">#E5C29F</color>
+    <color name="hit_1">#D7B899</color>
+
 </resources>

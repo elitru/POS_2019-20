@@ -35,6 +35,7 @@
             android:layout_height="60dp"
             android:backgroundTint="@color/yellow"
             android:layout_gravity="center"
+            android:onClick="onRestartGame"
             android:background="@drawable/restart" />
 
         <TextView
