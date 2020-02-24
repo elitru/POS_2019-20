@@ -1,11 +1,10 @@
 package at.EliasTrummer.Uhrzeitanzeige.gui;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 
@@ -16,7 +15,9 @@ public class TimePanel extends JPanel implements Runnable{
     
     public TimePanel(ZoneId timeZone){
         this.timeZone = timeZone;
-        this.setLayout(new GridLayout(1, 8, 0, 10));
+        this.setOpaque(true);
+        this.setBackground(new Color(51, 51, 51));
+        this.setLayout(new GridLayout(1, 8, 0, 5));
         
         digits = new DigitLabel[8];
         for(int i = 0; i < digits.length; i++){
@@ -24,7 +25,6 @@ public class TimePanel extends JPanel implements Runnable{
             
             if(i == 2 || i == 5){
                 digits[i].setDigit(-1);
-                digits[i].repaint();
             }
             
             this.add(digits[i]);

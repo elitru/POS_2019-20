@@ -46,6 +46,8 @@ public class TimeGUI extends javax.swing.JFrame {
         localeTime.start();
         country1Time.start();
         country2Time.start();
+        
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -67,14 +69,19 @@ public class TimeGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(700, 400));
 
-        pnContainer.setLayout(new java.awt.BorderLayout());
+        pnContainer.setBackground(new java.awt.Color(51, 51, 51));
+        pnContainer.setLayout(new java.awt.BorderLayout(25, 0));
 
+        pnLocation.setBackground(new java.awt.Color(51, 51, 51));
         pnLocation.setPreferredSize(new java.awt.Dimension(200, 450));
         pnLocation.setLayout(new java.awt.GridLayout(3, 1, 100, 100));
 
+        lbLocale.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        lbLocale.setForeground(new java.awt.Color(255, 255, 255));
         lbLocale.setText("Österreich");
         pnLocation.add(lbLocale);
 
+        cbCountry1.setBackground(new java.awt.Color(51, 51, 51));
         cbCountry1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbCountry1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -83,6 +90,7 @@ public class TimeGUI extends javax.swing.JFrame {
         });
         pnLocation.add(cbCountry1);
 
+        cbCountry2.setBackground(new java.awt.Color(51, 51, 51));
         cbCountry2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbCountry2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,6 +101,7 @@ public class TimeGUI extends javax.swing.JFrame {
 
         pnContainer.add(pnLocation, java.awt.BorderLayout.WEST);
 
+        pnClocks.setBackground(new java.awt.Color(51, 51, 51));
         pnClocks.setLayout(new java.awt.GridLayout(3, 1, 0, 30));
         pnContainer.add(pnClocks, java.awt.BorderLayout.CENTER);
 

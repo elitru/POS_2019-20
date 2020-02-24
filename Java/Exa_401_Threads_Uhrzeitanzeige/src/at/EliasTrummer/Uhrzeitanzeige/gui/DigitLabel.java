@@ -23,10 +23,13 @@ public class DigitLabel extends JLabel{
 
     public DigitLabel(int digit) {
         this.digit = digit;
+        this.setBackground(new Color(51, 51, 51));
+        this.setOpaque(true);
     }
 
     public void setDigit(int digit) {
         this.digit = digit;
+        this.repaint();
     }
 
     @Override
