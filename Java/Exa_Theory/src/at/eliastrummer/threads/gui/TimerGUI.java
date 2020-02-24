@@ -64,12 +64,22 @@ public class TimerGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void onStart(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onStart
+        if(timerThread != null){
+            if(!timerThread.isAlive()){
+                timerThread = new Thread((TimerLabel) this.lbTime);
+                timerThread.start();
+            }
+            return;
+        }
+        
+        timerThread = new Thread((TimerLabel) this.lbTime);
         timerThread.start();
     }//GEN-LAST:event_onStart
 
     private void onStop(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onStop
-        timerThread = new Thread((TimerLabel) this.lbTime);
-        timerThread.interrupt();
+        if(timerThread != null){
+            timerThread.interrupt();
+        }
     }//GEN-LAST:event_onStop
 
     /**
