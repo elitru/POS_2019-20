@@ -28,7 +28,9 @@ public class AccountUser implements Runnable{
     
     @Override
     public void run() {
+        int deadlockCount = 0;
         for(int i = 0; i < 10; i++){
+            deadlockCount = 0;
             try {
                 logger.append(name + " has started\n");
                 int amount = RND.nextInt(41) + 10;
@@ -37,12 +39,18 @@ public class AccountUser implements Runnable{
                 
                 synchronized(account){
                     logger.append("Trying to make transaction --> " + amount + "\n");
-                    while((account.getBalance() + amount) < 0){
+                    while((account.getBalance() + amount) < 0 && deadlockCount < 3){
                         try {
                             logger.append(name + " is waiting now\n");
                             account.wait(2000);
+                            deadlockCount++;
                             logger.append(name + " has finished waiting\n");
                         } catch (InterruptedException ex) {}
+                    }
+                    
+                    if(deadlockCount >= 3){
+                        i--;
+                        continue;
                     }
                     
                     account.performTransaction(amount);
