@@ -29,25 +29,29 @@ public class AccountUser implements Runnable{
     @Override
     public void run() {
         for(int i = 0; i < 10; i++){
-            logger.append(name + " has started\n");
-            int amount = RND.nextInt(41) + 10;
-            
-            amount = RND.nextBoolean() ? amount : amount * (-1);
-            
-            synchronized(account){
-                logger.append("Trying to make transaction --> " + amount + "\n");
-                while((account.getBalance() + amount) < 0){
-                    try {
-                        logger.append(name + " is waiting now\n");
-                        account.wait(2000);
-                        logger.append(name + " has finished waiting\n");
-                    } catch (InterruptedException ex) {}
+            try {
+                logger.append(name + " has started\n");
+                int amount = RND.nextInt(41) + 10;
+                
+                amount = RND.nextBoolean() ? amount : amount * (-1);
+                
+                synchronized(account){
+                    logger.append("Trying to make transaction --> " + amount + "\n");
+                    while((account.getBalance() + amount) < 0){
+                        try {
+                            logger.append(name + " is waiting now\n");
+                            account.wait(2000);
+                            logger.append(name + " has finished waiting\n");
+                        } catch (InterruptedException ex) {}
+                    }
+                    
+                    account.performTransaction(amount);
+                    logger.append(name + " performed transaction: " + amount + "\n");
+                    account.notifyAll();
                 }
                 
-                account.performTransaction(amount);
-                logger.append(name + " performed transaction: " + amount + "\n");
-                account.notifyAll();
-            }
+                Thread.sleep(RND.nextInt(1000) + 1);
+            } catch (InterruptedException ex) {}
         }
     }
 

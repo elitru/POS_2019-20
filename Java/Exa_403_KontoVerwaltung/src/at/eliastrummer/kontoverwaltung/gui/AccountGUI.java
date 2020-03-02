@@ -114,6 +114,9 @@ public class AccountGUI extends javax.swing.JFrame {
             return;
         }
         AccountUser user = new AccountUser(result, account, taOutput);
+        if(userModel.exists(user)){
+            return;
+        }
         userModel.add(user);
     }//GEN-LAST:event_miAddUserActionPerformed
 
@@ -125,12 +128,14 @@ public class AccountGUI extends javax.swing.JFrame {
         if(account == null){
             miCreateAccountActionPerformed(null);
         }
+        taOutput.setText("");
         threads.clear();
         List<AccountUser> selectedUsers = ltUsers.getSelectedValuesList();
         selectedUsers.forEach(user -> {
             user.setAccount(account);
             
             Thread t = new Thread(user, user.getName());
+            t.setPriority(Thread.NORM_PRIORITY + 1);
             threads.add(t);
             t.start();
         });
