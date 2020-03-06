@@ -77,7 +77,7 @@ public class AccountGUI extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(700, 450));
 
         lbBalance.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbBalance.setText("648,00 €");
+        lbBalance.setText("00,00 €");
         lbBalance.setBorder(javax.swing.BorderFactory.createTitledBorder("Account Balance"));
         getContentPane().add(lbBalance, java.awt.BorderLayout.PAGE_END);
 
