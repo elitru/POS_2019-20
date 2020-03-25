@@ -21,7 +21,7 @@ public class SudokuIOHelper {
             SudokuField field = new SudokuField(lines.get(i));
             int row = 0;
             
-            for(int i2 = i + 1; i2 < (i + 9); i2++){
+            for(int i2 = i + 1; i2 < (i + 10); i2++){
                 char[] line = lines.get(i2).toCharArray();
                 
                 for(int i3 = 0; i3 < line.length; i3++){

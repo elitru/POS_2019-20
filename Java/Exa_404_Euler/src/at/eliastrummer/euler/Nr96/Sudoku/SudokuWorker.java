@@ -19,10 +19,7 @@ public class SudokuWorker implements Callable<Integer>{
             int digit_1 = field[0][0];
             int digit_2 = field[0][1];
             int digit_3 = field[0][2];
-            
-            //printField();
             int result = Integer.parseInt("" + digit_1 + digit_2 + digit_3);
-            //System.out.println(name + " -> " + result);
             return result;
         }
         return -1;
@@ -89,17 +86,5 @@ public class SudokuWorker implements Callable<Integer>{
         }
         
         return false;
-    }
-    
-    private void printField(){
-        System.out.println(name);
-        for(int y = 0; y < field.length; y++){
-            for(int x = 0; x < field.length; x++){
-                System.out.print(field[y][x] + "");
-            }
-            System.out.println("");
-        }
-        
-        System.out.println("\n");
     }
 }

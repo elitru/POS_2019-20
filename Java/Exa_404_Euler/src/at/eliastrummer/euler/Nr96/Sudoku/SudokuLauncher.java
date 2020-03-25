@@ -11,6 +11,7 @@ import java.util.concurrent.Future;
 
 
 public class SudokuLauncher {
+    public static int count = 0;
     public static void main(String[] args) throws FileNotFoundException {
         new SudokuLauncher().launch();
     }
