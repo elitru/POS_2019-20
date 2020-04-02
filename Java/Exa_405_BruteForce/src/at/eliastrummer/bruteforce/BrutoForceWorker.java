@@ -10,7 +10,8 @@ import javax.xml.bind.DatatypeConverter;
 public class BrutoForceWorker implements Callable<ResultHolder>{
 
     private Person person;
-
+    private boolean isCancelled = false;
+    
     public BrutoForceWorker(Person person) {
         this.person = person;
     }
@@ -33,14 +34,16 @@ public class BrutoForceWorker implements Callable<ResultHolder>{
                     for(int i4 = 0; i4 < characters.size(); i4++){
                         for(int i5 = 0; i5 < characters.size(); i5++){
                             String word = "" + characters.get(i) + characters.get(i2) + characters.get(i3) + characters.get(i4) + characters.get(i5);
-                            String hash = hash(word);
+                            String hash = hash(this.person.getFirstname() + this.person.getLastname() + word);
                             
-                            if(word.equals("9j0g3")){
-                                System.out.println("-> " + hash);
-                            }
+                            //System.out.println(hash);
                             
                             if(hash.equals(person.getHash())){
                                 return new ResultHolder(person, word);
+                            }
+                            
+                            if(isCancelled){
+                                return null;
                             }
                         }
                     }
@@ -49,6 +52,10 @@ public class BrutoForceWorker implements Callable<ResultHolder>{
         }
         
         return null;
+    }
+    
+    public void cancel(){
+        this.isCancelled = true;
     }
     
     private String hash(String param){
