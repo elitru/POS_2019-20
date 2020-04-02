@@ -141,6 +141,8 @@ public class BrutoForceGUI extends javax.swing.JFrame {
                         isRunning = true;
                         btStarStop.setText("STOP");
                         bfLauncher.crackPasswords();
+                        btStarStop.setText("START");
+                        isRunning = false;
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(_this, "Es ist ein Fehler aufgetreten: " + ex.toString());
                         System.out.println(ex.toString());

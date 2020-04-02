@@ -28,6 +28,7 @@ public class BrutoForceManager {
         List<Person> data = BrutoForceIOHelper.load();
         List<BrutoForceWorker> threads = new ArrayList<>();
         isCancelled = false;
+        CounterHolder.counter = 0;
         
         ExecutorService pool = Executors.newFixedThreadPool(6);
         CompletionService<ResultHolder> service = new ExecutorCompletionService<>(pool);
@@ -47,7 +48,7 @@ public class BrutoForceManager {
             @Override
             public void run() {
                 while(!pool.isTerminated()){
-                    if(CounterHolder.counter == amountPasswordsToSolve || isCancelled){
+                    if(isCancelled || CounterHolder.counter == amountPasswordsToSolve){
                         pool.shutdownNow();
                         for(int i = 0; i < threads.size(); i++){
                             try{
@@ -56,19 +57,21 @@ public class BrutoForceManager {
                                 System.out.println(":(");
                             }
                         }
-
-                        logger.append("Cancelled...");
+                        
+                        if(isCancelled){
+                            logger.append("Cancelled...");
+                        }
                     }
                 }
             }
         }).start();
         
-        while(!pool.isTerminated()){
+        while(!pool.isTerminated() && CounterHolder.counter < amountPasswordsToSolve){
             Future<ResultHolder> result = service.take();
             ResultHolder rh = result.get();
             if(rh != null){
                 synchronized(logger){
-                    logger.append(rh.getPerson().getFirstname() + " " + rh.getPerson().getLastname() + " --> " + rh.getPassword() + "\n");
+                    logger.append(rh.getPerson().getFirstname() + " " + rh.getPerson().getLastname() + " --> " + rh.getPassword() + " (" + rh.getUsedTime() + "ms)\n");
                     CounterHolder.counter++;
                 }
             }            

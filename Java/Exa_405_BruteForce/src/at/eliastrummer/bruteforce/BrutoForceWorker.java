@@ -18,6 +18,7 @@ public class BrutoForceWorker implements Callable<ResultHolder>{
     
     @Override
     public ResultHolder call() throws Exception {
+        long started = System.currentTimeMillis();
         List<Character> characters = new ArrayList<>();
         
         for(int i = (int)'a'; i <= (int)'z'; i++){
@@ -39,7 +40,7 @@ public class BrutoForceWorker implements Callable<ResultHolder>{
                             //System.out.println(hash);
                             
                             if(hash.equals(person.getHash())){
-                                return new ResultHolder(person, word);
+                                return new ResultHolder(person, word, (System.currentTimeMillis() - started));
                             }
                             
                             if(isCancelled){
