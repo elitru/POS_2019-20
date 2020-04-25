@@ -409,6 +409,7 @@ public class MitarbeiterGUI extends javax.swing.JFrame {
                         if (dbHandler.insertEmployee(e) == null) {
                             JOptionPane.showMessageDialog(_this, "An error occured during inserting test data!");
                         } else {
+                            System.out.println(e);
                             DatabaseHandler.employees.add(e);
                         }
                     });
@@ -484,14 +485,14 @@ public class MitarbeiterGUI extends javax.swing.JFrame {
             employeeModel.clear();
             employeeModel.addAll(DatabaseHandler.employees);
             lbAvgMale.setText("Average (Men): " + String.format("%.2f", getAverageSalary("m", DatabaseHandler.employees)));
-            lbAvgFemale.setText("Average (Women): " + String.format("%.2f", getAverageSalary("m", DatabaseHandler.employees)));
+            lbAvgFemale.setText("Average (Women): " + String.format("%.2f", getAverageSalary("w", DatabaseHandler.employees)));
         } else {
             try {
                 List<Employee> filtered = getEmployeesFromDepartment(Integer.parseInt(dep), DatabaseHandler.employees);
                 employeeModel.clear();
                 employeeModel.addAll(filtered);
-                lbAvgMale.setText("Average (Men): " + String.format("%.2f", getAverageSalary("m", DatabaseHandler.employees)));
-                lbAvgFemale.setText("Average (Women): " + String.format("%.2f", getAverageSalary("w", DatabaseHandler.employees)));
+                lbAvgMale.setText("Average (Men): " + String.format("%.2f", getAverageSalary("m", getEmployeesFromDepartment(Integer.parseInt(dep), DatabaseHandler.employees))));
+                lbAvgFemale.setText("Average (Women): " + String.format("%.2f", getAverageSalary("w", getEmployeesFromDepartment(Integer.parseInt(dep), DatabaseHandler.employees))));
             } catch (Exception e) {
             }
         }
@@ -527,12 +528,12 @@ public class MitarbeiterGUI extends javax.swing.JFrame {
                     }
 
                     Employee employee = dbHandler.insertEmployee(template);
-                    
-                    if(employee == null){
+
+                    if (employee == null) {
                         JOptionPane.showMessageDialog(_this, "An error occured during insertion!");
                         return;
                     }
-                    
+
                     DatabaseHandler.employees.add(employee);
                     reloadList();
                     JOptionPane.showMessageDialog(_this, "Employee was successfully inserted into the database!");
