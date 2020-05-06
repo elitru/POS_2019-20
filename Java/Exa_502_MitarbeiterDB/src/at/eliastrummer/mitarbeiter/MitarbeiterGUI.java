@@ -26,7 +26,7 @@ public class MitarbeiterGUI extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(MitarbeiterGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        dbHandler = new DatabaseHandler("postgres", "admin");
+        dbHandler = new DatabaseHandler("postgres", "postgres");
 
         this.setLocationRelativeTo(null);
         this.ltEmployee.setModel(employeeModel);
