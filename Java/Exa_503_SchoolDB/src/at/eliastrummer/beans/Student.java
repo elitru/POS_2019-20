@@ -91,7 +91,7 @@ public class Student {
         String classname = rs.getString("classname");
         int catno = rs.getInt("catno");
         String firstname = rs.getString("firstname");
-        String surname = rs.getString("surname");
+        String surname = rs.getString("lastname");
         String gender = rs.getString("gender");
         LocalDate dateOfBirth = rs.getDate("dateofbirth").toLocalDate();
         
