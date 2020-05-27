@@ -150,6 +150,11 @@ public class BookDB extends javax.swing.JFrame {
                 onValueChanged(evt);
             }
         });
+        ltBooks.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                ltBooksValueChanged(evt);
+            }
+        });
         scoll.setViewportView(ltBooks);
 
         jPanel6.add(scoll, java.awt.BorderLayout.CENTER);
@@ -206,12 +211,16 @@ public class BookDB extends javax.swing.JFrame {
     }//GEN-LAST:event_tfSearchKeyReleased
 
     private void onValueChanged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onValueChanged
+        
+    }//GEN-LAST:event_onValueChanged
+
+    private void ltBooksValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ltBooksValueChanged
         if(ltBooks.getSelectedValuesList().size() != 1){
             return;
         }
         
         format(ltBooks.getSelectedValuesList().get(0));
-    }//GEN-LAST:event_onValueChanged
+    }//GEN-LAST:event_ltBooksValueChanged
 
     private void filter(String genre, String publisher, String author, String title){
         bookModel.clear();
@@ -223,7 +232,7 @@ public class BookDB extends javax.swing.JFrame {
         html = html.replace("{TITLE}", book.getTitle());
         html = html.replace("{PAGES}", book.getTotalPages() + "");
         html = html.replace("{PUBLISHED_ON}", book.getPublishedOn().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
-        html = html.replace("{ISBN}", book.getIsbn());
+        html = html.replace("{ISBN}", book.getIsbn() == null ? "-" : book.getIsbn());
         html = html.replace("{RATING}", String.format("%.2f", book.getRating()));
         html = html.replace("{PUBLISHER}", book.getPublisher());
         
