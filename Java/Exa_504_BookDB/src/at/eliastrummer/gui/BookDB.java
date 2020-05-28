@@ -7,27 +7,27 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.DefaultComboBoxModel;
 
 public class BookDB extends javax.swing.JFrame {
-    
+
     private BookModel bookModel = new BookModel();
     private DefaultComboBoxModel<String> genreModel = new DefaultComboBoxModel<>();
     private DefaultComboBoxModel<String> publisherModel = new DefaultComboBoxModel<>();
-    
+
     public BookDB() {
         initComponents();
         this.setLocationRelativeTo(null);
-        
+
         epInfo.setText("");
-        
+
         DBAcces.getInstance().connect();
-        
+
         this.ltBooks.setModel(bookModel);
         bookModel.addAll(DBAcces.getInstance().getBooks("", "", "", ""));
-        
-        genreModel.addElement("All");
+
+        genreModel.addElement("Alle");
         DBAcces.getInstance().getAllGenres().forEach(genreModel::addElement);
         this.cbGenre.setModel(genreModel);
-        
-        publisherModel.addElement("All");
+
+        publisherModel.addElement("Alle");
         DBAcces.getInstance().getAllPublishers().forEach(publisherModel::addElement);
         this.cbVerlag.setModel(publisherModel);
     }
@@ -80,9 +80,14 @@ public class BookDB extends javax.swing.JFrame {
 
         cbVerlag.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbVerlag.setPreferredSize(new java.awt.Dimension(150, 30));
+        cbVerlag.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cbVerlagMouseClicked(evt);
+            }
+        });
         cbVerlag.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onDoFilter(evt);
+                onFilterPublisher(evt);
             }
         });
         jPanel2.add(cbVerlag, java.awt.BorderLayout.CENTER);
@@ -105,9 +110,14 @@ public class BookDB extends javax.swing.JFrame {
 
         cbGenre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbGenre.setPreferredSize(new java.awt.Dimension(250, 30));
+        cbGenre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cbGenreMouseClicked(evt);
+            }
+        });
         cbGenre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onDoFilter(evt);
+                onFilterGenre(evt);
             }
         });
         jPanel3.add(cbGenre, java.awt.BorderLayout.CENTER);
@@ -121,7 +131,7 @@ public class BookDB extends javax.swing.JFrame {
         rbBook.setText("Buch");
         rbBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onDoFilter(evt);
+                onDoFilterPublisher(evt);
             }
         });
         jPanel4.add(rbBook);
@@ -130,7 +140,7 @@ public class BookDB extends javax.swing.JFrame {
         rbAuthor.setText("Autor");
         rbAuthor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onDoFilter(evt);
+                onDoFilterPublisher(evt);
             }
         });
         jPanel4.add(rbAuthor);
@@ -182,52 +192,109 @@ public class BookDB extends javax.swing.JFrame {
         DBAcces.getInstance().disconnect();
     }//GEN-LAST:event_formWindowClosing
 
-    private void onDoFilter(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onDoFilter
-        String genre = (String) cbGenre.getSelectedItem();
-        if(genre.equalsIgnoreCase("all")){
-            genre = "";
-        }
-        
-        String pub = (String) cbVerlag.getSelectedItem();
-        if(pub.equalsIgnoreCase("all")){
-            pub = "";
-        }
-        
-        filter(genre, pub, rbAuthor.isSelected() ? tfSearch.getText() : "", rbBook.isSelected() ? tfSearch.getText() : "");
-    }//GEN-LAST:event_onDoFilter
+    private void onDoFilterPublisher(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onDoFilterPublisher
+
+    }//GEN-LAST:event_onDoFilterPublisher
 
     private void tfSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfSearchKeyReleased
         String genre = (String) cbGenre.getSelectedItem();
-        if(genre.equalsIgnoreCase("all")){
+        if (genre.equalsIgnoreCase("all")) {
             genre = "";
         }
-        
+
         String pub = (String) cbVerlag.getSelectedItem();
-        if(pub.equalsIgnoreCase("all")){
+        if (pub.equalsIgnoreCase("all")) {
             pub = "";
         }
-        
+
         filter(genre, pub, rbAuthor.isSelected() ? tfSearch.getText() : "", rbBook.isSelected() ? tfSearch.getText() : "");
     }//GEN-LAST:event_tfSearchKeyReleased
 
     private void onValueChanged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onValueChanged
-        
+
     }//GEN-LAST:event_onValueChanged
 
     private void ltBooksValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ltBooksValueChanged
-        if(ltBooks.getSelectedValuesList().size() != 1){
+        if (ltBooks.getSelectedValuesList().size() != 1) {
             return;
         }
-        
+
         format(ltBooks.getSelectedValuesList().get(0));
     }//GEN-LAST:event_ltBooksValueChanged
 
-    private void filter(String genre, String publisher, String author, String title){
+    private void onFilterPublisher(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onFilterPublisher
+         try {
+            String genre = (String) cbGenre.getSelectedItem();
+            if (genre.equalsIgnoreCase("alle")) {
+                genre = "";
+            }
+
+            String pub = (String) cbVerlag.getSelectedItem();
+            if (pub.equalsIgnoreCase("alle")) {
+                pub = "";
+            }
+            //System.out.println("=> " + pub + " | " + genre);
+            setGenres(pub, pub, genre);            
+            filter(genre, pub, rbAuthor.isSelected() ? tfSearch.getText() : "", rbBook.isSelected() ? tfSearch.getText() : "");
+
+        } catch (NullPointerException e) {
+        }
+    }//GEN-LAST:event_onFilterPublisher
+
+    private void onFilterGenre(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onFilterGenre
+        try {
+            String genre = (String) cbGenre.getSelectedItem();
+            if (genre.equalsIgnoreCase("alle")) {
+                genre = "";
+            }
+
+            String pub = (String) cbVerlag.getSelectedItem();
+            if (pub.equalsIgnoreCase("alle")) {
+                pub = "";
+            }
+            //System.out.println("-> " + pub + " | " + genre);
+            
+            filter(genre, pub, rbAuthor.isSelected() ? tfSearch.getText() : "", rbBook.isSelected() ? tfSearch.getText() : "");
+        } catch (NullPointerException e) {
+        }
+    }//GEN-LAST:event_onFilterGenre
+
+    private void cbVerlagMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbVerlagMouseClicked
+       
+    }//GEN-LAST:event_cbVerlagMouseClicked
+
+    private void cbGenreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbGenreMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbGenreMouseClicked
+
+    private void filter(String genre, String publisher, String author, String title) {
         bookModel.clear();
         bookModel.addAll(DBAcces.getInstance().getBooks(title, author, genre, publisher));
     }
-    
-    private void format(Book book){
+
+    private void setGenres(String publisher, String selectedPublisher, String selectedGenre) {
+        genreModel.removeAllElements();
+        genreModel.addElement("Alle");
+
+        if (publisher.equals("")) {
+            publisher = "Alle";
+        }
+
+        if (publisher.equalsIgnoreCase("alle")) {
+            DBAcces.getInstance().getAllGenres().forEach(genreModel::addElement);
+            genreModel.setSelectedItem("Alle");
+            publisherModel.setSelectedItem("Alle");
+            return;
+        } else {
+            DBAcces.getInstance().getGenres(publisher).forEach(g -> {
+                genreModel.addElement(g);
+            });
+        }
+        publisherModel.setSelectedItem(publisher);
+        //genreModel.setSelectedItem(selectedGenre);
+    }
+
+    private void format(Book book) {
         String html = HTMLTemplate.TEMPLATE;
         html = html.replace("{TITLE}", book.getTitle());
         html = html.replace("{PAGES}", book.getTotalPages() + "");
@@ -235,34 +302,33 @@ public class BookDB extends javax.swing.JFrame {
         html = html.replace("{ISBN}", book.getIsbn() == null ? "-" : book.getIsbn());
         html = html.replace("{RATING}", String.format("%.2f", book.getRating()));
         html = html.replace("{PUBLISHER}", book.getPublisher());
-        
+
         String authors = "";
-        
-        for(int i = 0; i < book.getAuthors().size(); i++){
+
+        for (int i = 0; i < book.getAuthors().size(); i++) {
             authors += book.getAuthors().get(i).getLastname() + ", " + book.getAuthors().get(i).getFirstname() + (book.getAuthors().get(i).getMiddlename() != null ? book.getAuthors().get(i).getMiddlename() : "");
-            
-            if(i < book.getAuthors().size() - 1){
+
+            if (i < book.getAuthors().size() - 1) {
                 authors += "<br/>";
             }
         }
-        
+
         html = html.replace("{AUTHOR}", authors);
-        
+
         String genres = "";
-        
-        for(int i = 0; i < book.getGenres().size(); i++){
+
+        for (int i = 0; i < book.getGenres().size(); i++) {
             genres += book.getGenres().get(i);
-            
-            if(i < book.getAuthors().size() - 1){
+            if (i < book.getGenres().size() - 1) {
                 genres += ", ";
             }
         }
-        
+
         html = html.replace("{GENRE}", genres);
-        
+
         epInfo.setText(html);
     }
-    
+
     /**
      * @param args the command line arguments
      */

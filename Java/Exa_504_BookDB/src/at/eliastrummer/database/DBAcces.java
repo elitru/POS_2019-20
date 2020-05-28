@@ -154,4 +154,45 @@ public class DBAcces {
             return new ArrayList<String>();
         }
     }
+    
+    public List<String> getGenres(String publisher){
+        try {
+            List<String> result = new ArrayList<>();
+            
+            Statement stmt = db.getStatement();
+            String query = SQLStatements.GET_GENRES.replace("{publisher}", publisher);
+            ResultSet rs = stmt.executeQuery(query);
+            
+            while(rs.next()){
+                result.add(rs.getString("genre"));
+            }
+            
+            db.releaseStatement(stmt);
+                        
+            return result;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBAcces.class.getName()).log(Level.SEVERE, null, ex);
+            return new ArrayList<String>();
+        }
+    }
+    
+    public List<String> getPublisher(String publisher){
+        try {
+            List<String> result = new ArrayList<>();
+            
+            Statement stmt = db.getStatement();
+            ResultSet rs = stmt.executeQuery(SQLStatements.GET_PUBLISHERS.replace("{genre}", publisher));
+            
+            while(rs.next()){
+                result.add(rs.getString("name"));
+            }
+            
+            db.releaseStatement(stmt);
+            
+            return result;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBAcces.class.getName()).log(Level.SEVERE, null, ex);
+            return new ArrayList<String>();
+        }
+    }
 }

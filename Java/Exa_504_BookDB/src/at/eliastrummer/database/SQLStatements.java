@@ -32,4 +32,18 @@ public class SQLStatements {
             + "				OR UPPER(ath.first_name) LIKE UPPER('%{author_firstname}%'))\n"
             + "	) > 0\n"
             + "ORDER BY title;";
+
+    public static final String GET_PUBLISHERS = "SELECT DISTINCT p.name\n"
+            + "FROM genres g\n"
+            + "INNER JOIN book_genres bg ON bg.genre_id = g.genre_id\n"
+            + "INNER JOIN books b ON bg.book_id = b.book_id\n"
+            + "INNER JOIN publishers p ON b.publisher_id = p.publisher_id\n"
+            + "WHERE g.genre LIKE '%{genre}%';";
+
+    public static final String GET_GENRES = "SELECT DISTINCT g.genre\n"
+            + "FROM genres g\n"
+            + "INNER JOIN book_genres bg ON bg.genre_id = g.genre_id\n"
+            + "INNER JOIN books b ON bg.book_id = b.book_id\n"
+            + "INNER JOIN publishers p ON b.publisher_id = p.publisher_id\n"
+            + "WHERE p.name LIKE '%{publisher}%';";
 }
