@@ -306,7 +306,7 @@ public class BookDB extends javax.swing.JFrame {
         String authors = "";
 
         for (int i = 0; i < book.getAuthors().size(); i++) {
-            authors += book.getAuthors().get(i).getLastname() + ", " + book.getAuthors().get(i).getFirstname() + (book.getAuthors().get(i).getMiddlename() != null ? book.getAuthors().get(i).getMiddlename() : "");
+            authors += book.getAuthors().get(i).getLastname() == null ? book.getAuthors().get(i).getLastname() : book.getAuthors().get(i).getLastname() + ", " + book.getAuthors().get(i).getFirstname() + (book.getAuthors().get(i).getMiddlename() != null ? book.getAuthors().get(i).getMiddlename() : "");
 
             if (i < book.getAuthors().size() - 1) {
                 authors += "<br/>";
