@@ -72,7 +72,7 @@ public class DBAcces {
             query = query.replace("{publisher}", publisher);
             query = query.replace("{author_lastname}", author);
             query = query.replace("{author_firstname}", author);
-                        
+                                    
             ResultSet rs = stmt.executeQuery(query);
             
             while(rs.next()){

@@ -223,7 +223,7 @@ public class BookDB extends javax.swing.JFrame {
     }//GEN-LAST:event_ltBooksValueChanged
 
     private void onFilterPublisher(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onFilterPublisher
-         try {
+        try {
             String genre = (String) cbGenre.getSelectedItem();
             if (genre.equalsIgnoreCase("alle")) {
                 genre = "";
@@ -234,7 +234,7 @@ public class BookDB extends javax.swing.JFrame {
                 pub = "";
             }
             //System.out.println("=> " + pub + " | " + genre);
-            setGenres(pub, pub, genre);            
+            setGenres(pub, pub, genre);
             filter(genre, pub, rbAuthor.isSelected() ? tfSearch.getText() : "", rbBook.isSelected() ? tfSearch.getText() : "");
 
         } catch (NullPointerException e) {
@@ -252,15 +252,13 @@ public class BookDB extends javax.swing.JFrame {
             if (pub.equalsIgnoreCase("alle")) {
                 pub = "";
             }
-            //System.out.println("-> " + pub + " | " + genre);
-            
             filter(genre, pub, rbAuthor.isSelected() ? tfSearch.getText() : "", rbBook.isSelected() ? tfSearch.getText() : "");
         } catch (NullPointerException e) {
         }
     }//GEN-LAST:event_onFilterGenre
 
     private void cbVerlagMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbVerlagMouseClicked
-       
+
     }//GEN-LAST:event_cbVerlagMouseClicked
 
     private void cbGenreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbGenreMouseClicked
@@ -269,6 +267,13 @@ public class BookDB extends javax.swing.JFrame {
 
     private void filter(String genre, String publisher, String author, String title) {
         bookModel.clear();
+        if (genre.equalsIgnoreCase("alle")) {
+            genre = "";
+        }
+
+        if (publisher.equalsIgnoreCase("alle")) {
+            publisher = "";
+        }
         bookModel.addAll(DBAcces.getInstance().getBooks(title, author, genre, publisher));
     }
 
