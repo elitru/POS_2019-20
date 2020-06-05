@@ -5,17 +5,16 @@
  */
 package at.eliastrummer.gui;
 
-/**
- *
- * @author elias
- */
+import javax.swing.DefaultComboBoxModel;
+
 public class EmployeeGUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form EmployeeGUI
-     */
+    private DefaultComboBoxModel depModel = new DefaultComboBoxModel();
+            
     public EmployeeGUI() {
         initComponents();
+        
+        this.cbDepartment.setModel(depModel);
     }
 
     /**
@@ -30,7 +29,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        cbMarketing = new javax.swing.JComboBox<>();
+        cbDepartment = new javax.swing.JComboBox<>();
         chbBirthdateBefore = new javax.swing.JCheckBox();
         tfBirthdateBefore = new javax.swing.JTextField();
         chbMale = new javax.swing.JCheckBox();
@@ -53,8 +52,8 @@ public class EmployeeGUI extends javax.swing.JFrame {
         jLabel1.setText("Department:");
         jPanel3.add(jLabel1);
 
-        cbMarketing.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel3.add(cbMarketing);
+        cbDepartment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel3.add(cbDepartment);
 
         chbBirthdateBefore.setText("Birthdate before");
         jPanel3.add(chbBirthdateBefore);
@@ -137,7 +136,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbMarketing;
+    private javax.swing.JComboBox<String> cbDepartment;
     private javax.swing.JCheckBox chbBirthdateBefore;
     private javax.swing.JCheckBox chbFemale;
     private javax.swing.JCheckBox chbMale;

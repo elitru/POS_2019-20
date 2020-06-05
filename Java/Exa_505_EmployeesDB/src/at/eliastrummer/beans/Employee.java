@@ -11,9 +11,8 @@ public class Employee {
     private Title title;
     private Salary salary;
     private EmployeeDepartmentInfo departmentInfo;
-    private DepartmentManager departmentManager;
 
-    public Employee(String firstname, String lastname, Gender gender, LocalDate birthdate, LocalDate hiredate, Title title, Salary salary, EmployeeDepartmentInfo departmentInfo, DepartmentManager departmentManager) {
+    public Employee(String firstname, String lastname, Gender gender, LocalDate birthdate, LocalDate hiredate, Title title, Salary salary, EmployeeDepartmentInfo departmentInfo) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.gender = gender;
@@ -22,7 +21,6 @@ public class Employee {
         this.title = title;
         this.salary = salary;
         this.departmentInfo = departmentInfo;
-        this.departmentManager = departmentManager;
     }
         
     public Employee(String firstname, String lastname, Gender gender, LocalDate birthdate, LocalDate hiredate) {
@@ -99,13 +97,5 @@ public class Employee {
 
     public void setDepartmentInfo(EmployeeDepartmentInfo departmentInfo) {
         this.departmentInfo = departmentInfo;
-    }
-
-    public DepartmentManager getDepartmentManager() {
-        return departmentManager;
-    }
-
-    public void setDepartmentManager(DepartmentManager departmentManager) {
-        this.departmentManager = departmentManager;
     }
 }
