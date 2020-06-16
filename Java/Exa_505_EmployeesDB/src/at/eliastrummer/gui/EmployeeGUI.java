@@ -5,16 +5,35 @@
  */
 package at.eliastrummer.gui;
 
+import at.eliastrummer.beans.Employee;
+import at.eliastrummer.bl.EmployeesModel;
+import at.eliastrummer.database.DBAcces;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 
 public class EmployeeGUI extends javax.swing.JFrame {
 
     private DefaultComboBoxModel depModel = new DefaultComboBoxModel();
-            
+    private EmployeesModel employeesModel;
+    private List<Employee> employees;
+
     public EmployeeGUI() {
-        initComponents();
-        
-        this.cbDepartment.setModel(depModel);
+        try {
+            initComponents();
+
+            DBAcces.getInstance().connect();
+            employees = DBAcces.getInstance().getEmployees("", true, true, LocalDate.now(), 0, 900);
+
+            employeesModel = new EmployeesModel(employees);
+            taEmployees.setModel(employeesModel);
+            this.cbDepartment.setModel(depModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -42,6 +61,11 @@ public class EmployeeGUI extends javax.swing.JFrame {
         taEmployees = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.GridLayout(1, 2));
 
         jPanel1.setLayout(new java.awt.GridLayout(2, 0));
@@ -99,6 +123,10 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        DBAcces.getInstance().disconnect();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
