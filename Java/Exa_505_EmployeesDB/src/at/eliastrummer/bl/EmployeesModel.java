@@ -46,4 +46,23 @@ public class EmployeesModel extends AbstractTableModel {
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return columnIndex == 0 || columnIndex == 3 ? true : false;
     }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees.clear();
+        this.employees.addAll(employees);
+        try{
+            fireTableRowsInserted(0, employees.size() - 1);
+        }catch(IndexOutOfBoundsException e){
+            
+        }
+    }
+
+    public void addEmployees(List<Employee> employees) {
+        this.employees.addAll(employees);
+        try{
+            fireTableRowsInserted(0, employees.size() - 1);
+        }catch(IndexOutOfBoundsException e){
+            
+        }
+    }
 }

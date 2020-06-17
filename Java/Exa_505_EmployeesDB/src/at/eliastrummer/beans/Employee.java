@@ -9,7 +9,8 @@ public class Employee extends TableDisplayObject {
 
     private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("dd.MM.yyyy");
     public static final String[] COLUMN_TILES = new String[]{
-        "Name",
+        "Lastname",
+        "Firstname",
         "Gender",
         "Birthdate",
         "Hiredate"
@@ -151,12 +152,14 @@ public class Employee extends TableDisplayObject {
     public String getValueForColumn(int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return lastname + ", " + firstname;
+                return lastname;
             case 1:
-                return gender.toString().toLowerCase();
+                return firstname;
             case 2:
-                return DTF.format(birthdate);
+                return gender.toString().toLowerCase();
             case 3:
+                return DTF.format(birthdate);
+            case 4:
                 return DTF.format(hiredate);
             default:
                 return "not_found";
@@ -167,9 +170,11 @@ public class Employee extends TableDisplayObject {
     public void setValueForColumn(int columnIndex, Object value) {
         try {
             switch (columnIndex) {
-                case 0:
-                    lastname = value.toString().split(", ")[0];
-                    firstname = value.toString().split(", ")[1];
+                case 1:
+                    lastname = value.toString();
+                    break;
+                case 2:
+                    firstname = value.toString();
                     break;
                 case 3:
                     hiredate = LocalDate.parse(value.toString(), DTF);

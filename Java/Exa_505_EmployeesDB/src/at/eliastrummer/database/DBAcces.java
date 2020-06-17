@@ -1,6 +1,7 @@
 package at.eliastrummer.database;
 
 import at.eliastrummer.beans.Department;
+import at.eliastrummer.beans.DepartmentManagerInfo;
 import at.eliastrummer.beans.Employee;
 import at.eliastrummer.beans.EmployeeDepartmentInfo;
 import at.eliastrummer.beans.Gender;
@@ -73,7 +74,7 @@ public class DBAcces {
         List<Title> titles = new ArrayList<>();
         List<Salary> salaries = new ArrayList<>();
         
-        String query = SQLStatements.GET_ENTRIES.replace("{department}", departmentName);
+        String query = SQLStatements.GET_ENTRIES.replace("{department}", departmentName == null ? "" : departmentName);
         query = query.replace("{birthdate}", DTF.format(birthdateBefore));
         query = query.replace("{male}", Boolean.toString(male).toLowerCase());
         query = query.replace("{female}", Boolean.toString(female).toLowerCase());
@@ -132,6 +133,48 @@ public class DBAcces {
             }else{
                 employee.getDepartmentInfo().add(departmentInfo);
                 result.add(employee);
+            }
+        }
+        
+        rs.close();
+        db.releaseStatement(stmt);
+        
+        return result;
+    }
+    
+    public List<String> getDepartments() throws SQLException{
+        List<String> result = new ArrayList<>();
+        
+        Statement stmt = db.getStatement();
+                
+        ResultSet rs = stmt.executeQuery(SQLStatements.GET_DEPARTMENTS);
+        
+        while(rs.next()){
+            result.add(rs.getString("dept_name"));
+        }
+        
+        rs.close();
+        db.releaseStatement(stmt);
+        
+        return result;
+    }
+    
+    public List<DepartmentManagerInfo> getDepartmentManagers(String department) throws SQLException{
+        List<DepartmentManagerInfo> result = new ArrayList<>();
+        
+        Statement stmt = db.getStatement();
+                
+        ResultSet rs = stmt.executeQuery(SQLStatements.GET_MANAGERS_FOR_DEPARTMENT.replace("{department}", department));
+        
+        while(rs.next()){
+            DepartmentManagerInfo dmi = new DepartmentManagerInfo(
+                    rs.getDate("from_date").toLocalDate(),
+                    rs.getDate("to_date").toLocalDate(),
+                    new Employee(rs.getInt("emp_no"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("gender").equalsIgnoreCase("m") ? Gender.MALE : Gender.FEMALE, rs.getDate("birth_date").toLocalDate(), rs.getDate("hire_date").toLocalDate()),
+                    new Department(rs.getString("dept_no"), rs.getString("dept_name")));
+            
+            if(!result.contains(dmi)){
+                result.add(dmi);
             }
         }
         

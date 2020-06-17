@@ -5,27 +5,45 @@
  */
 package at.eliastrummer.gui;
 
+import at.eliastrummer.beans.DepartmentManagerInfo;
 import at.eliastrummer.beans.Employee;
+import at.eliastrummer.beans.Filter;
 import at.eliastrummer.bl.EmployeesModel;
 import at.eliastrummer.database.DBAcces;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollBar;
 
 public class EmployeeGUI extends javax.swing.JFrame {
+
+    private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("d.M.yyyy");
 
     private DefaultComboBoxModel depModel = new DefaultComboBoxModel();
     private EmployeesModel employeesModel;
     private List<Employee> employees;
+    private Filter filter;
+    private boolean isFetching = false;
 
     public EmployeeGUI() {
         try {
             initComponents();
+            setLocationRelativeTo(null);
+
+            filter = new Filter("", true, true, LocalDate.now(), 0, 900);
 
             DBAcces.getInstance().connect();
+
+            depModel.addElement("Alle");
+            taEmployees.setAutoCreateRowSorter(true);
+            DBAcces.getInstance().getDepartments().forEach(depModel::addElement);
+
             employees = DBAcces.getInstance().getEmployees("", true, true, LocalDate.now(), 0, 900);
 
             employeesModel = new EmployeesModel(employees);
@@ -34,6 +52,67 @@ public class EmployeeGUI extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        spEmployees.getVerticalScrollBar().addAdjustmentListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                JScrollBar scrollBar = (JScrollBar) e.getAdjustable();
+                int extent = scrollBar.getModel().getExtent();
+                int maximum = scrollBar.getModel().getMaximum();
+                if (extent + e.getValue() == maximum && !isFetching) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                isFetching = true;
+                                updateCurrentFilter();
+                                filter.setTo(filter.getTo() + 900);
+                                employees = DBAcces.getInstance().getEmployees(filter.getDepartment(), filter.isMale(), filter.isFemale(), filter.getBirthdateBefore(), filter.getFrom(), filter.getTo());
+                                isFetching = false;
+                                employeesModel.setEmployees(employees);
+                                String text = "";
+
+                                if (!filter.getDepartment().equals("")) {
+                                    for (DepartmentManagerInfo entry : DBAcces.getInstance().getDepartmentManagers(filter.getDepartment())) {
+                                        text += entry.getManager().getLastname() + ", " + entry.getManager().getFirstname();
+                                        text += ": from " + entry.getFrom().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+                                        text += ": to " + (entry.getTo().equals(LocalDate.of(9999, 1, 1)) ? "now" : entry.getTo().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+                                        text += "\n";
+                                    }
+                                }
+
+                                epManager.setText(text);
+                            } catch (SQLException ex) {
+                                isFetching = false;
+                                Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }).start();
+                }
+            }
+        });
+    }
+
+    private void updateCurrentFilter() {
+        LocalDate birthdateBefore = null;
+
+        try {
+            String date = tfBirthdateBefore.getText();
+
+            if (date.isEmpty() || !chbBirthdateBefore.isSelected()) {
+                birthdateBefore = LocalDate.now();
+            } else {
+                birthdateBefore = LocalDate.parse(tfBirthdateBefore.getText(), DTF);
+            }
+        } catch (DateTimeParseException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Ungültiges Datum (Format: d.M.yyyy)");
+            return;
+        }
+
+        filter = new Filter(((String) cbDepartment.getSelectedItem()).equals("Alle") ? "" : (String) cbDepartment.getSelectedItem(),
+                !chbMale.isSelected() && !chbFemale.isSelected() ? true : chbMale.isSelected(),
+                !chbMale.isSelected() && !chbFemale.isSelected() ? true : chbFemale.isSelected(),
+                birthdateBefore, filter.getFrom(), filter.getTo());
     }
 
     /**
@@ -53,11 +132,12 @@ public class EmployeeGUI extends javax.swing.JFrame {
         tfBirthdateBefore = new javax.swing.JTextField();
         chbMale = new javax.swing.JCheckBox();
         chbFemale = new javax.swing.JCheckBox();
+        btFilter = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        epLocations = new javax.swing.JEditorPane();
+        epManager = new javax.swing.JEditorPane();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        spEmployees = new javax.swing.JScrollPane();
         taEmployees = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -71,7 +151,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.GridLayout(2, 0));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Filter"));
-        jPanel3.setLayout(new java.awt.GridLayout(3, 2));
+        jPanel3.setLayout(new java.awt.GridLayout(4, 2));
 
         jLabel1.setText("Department:");
         jPanel3.add(jLabel1);
@@ -79,22 +159,38 @@ public class EmployeeGUI extends javax.swing.JFrame {
         cbDepartment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel3.add(cbDepartment);
 
-        chbBirthdateBefore.setText("Birthdate before");
+        chbBirthdateBefore.setText("Birthdate before (d.M.yyyy)");
+        chbBirthdateBefore.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chbBirthdateBeforeActionPerformed(evt);
+            }
+        });
         jPanel3.add(chbBirthdateBefore);
         jPanel3.add(tfBirthdateBefore);
 
+        chbMale.setSelected(true);
         chbMale.setText("Male");
         jPanel3.add(chbMale);
 
+        chbFemale.setSelected(true);
         chbFemale.setText("Female");
         jPanel3.add(chbFemale);
+
+        btFilter.setText("Filtern");
+        btFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btFilterActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btFilter);
 
         jPanel1.add(jPanel3);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Management"));
         jPanel4.setLayout(new java.awt.BorderLayout());
 
-        jScrollPane2.setViewportView(epLocations);
+        epManager.setEditable(false);
+        jScrollPane2.setViewportView(epManager);
 
         jPanel4.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
@@ -115,9 +211,9 @@ public class EmployeeGUI extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(taEmployees);
+        spEmployees.setViewportView(taEmployees);
 
-        jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        jPanel2.add(spEmployees, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanel2);
 
@@ -127,6 +223,51 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         DBAcces.getInstance().disconnect();
     }//GEN-LAST:event_formWindowClosing
+
+    private void chbBirthdateBeforeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbBirthdateBeforeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chbBirthdateBeforeActionPerformed
+
+    private void btFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFilterActionPerformed
+        updateCurrentFilter();
+        reload();
+    }//GEN-LAST:event_btFilterActionPerformed
+
+    private void reload() {
+        if (isFetching) {
+            return;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    isFetching = true;
+                    updateCurrentFilter();
+                    filter.setTo(filter.getTo() + 900);
+                    employees = DBAcces.getInstance().getEmployees(filter.getDepartment(), filter.isMale(), filter.isFemale(), filter.getBirthdateBefore(), filter.getFrom(), filter.getTo());
+                    isFetching = false;
+                    employeesModel.setEmployees(employees);
+                    String text = "";
+
+                    if (!filter.getDepartment().equals("")) {
+                        for (DepartmentManagerInfo entry : DBAcces.getInstance().getDepartmentManagers(filter.getDepartment())) {
+                            System.out.println("ere");
+                            text += entry.getManager().getLastname() + ", " + entry.getManager().getFirstname();
+                            text += ": from " + entry.getFrom().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+                            text += ": to " + (entry.getTo().equals(LocalDate.of(9999, 1, 1)) ? "now" : entry.getTo().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+                            text += "\n";
+                        }
+                    }
+
+                    epManager.setText(text);
+                } catch (SQLException ex) {
+                    isFetching = false;
+                    Logger.getLogger(EmployeeGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }).start();
+    }
 
     /**
      * @param args the command line arguments
@@ -164,18 +305,19 @@ public class EmployeeGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btFilter;
     private javax.swing.JComboBox<String> cbDepartment;
     private javax.swing.JCheckBox chbBirthdateBefore;
     private javax.swing.JCheckBox chbFemale;
     private javax.swing.JCheckBox chbMale;
-    private javax.swing.JEditorPane epLocations;
+    private javax.swing.JEditorPane epManager;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane spEmployees;
     private javax.swing.JTable taEmployees;
     private javax.swing.JTextField tfBirthdateBefore;
     // End of variables declaration//GEN-END:variables

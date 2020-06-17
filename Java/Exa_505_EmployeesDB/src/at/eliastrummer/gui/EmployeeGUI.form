@@ -47,7 +47,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
             <Property name="columns" type="int" value="2"/>
-            <Property name="rows" type="int" value="3"/>
+            <Property name="rows" type="int" value="4"/>
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel1">
@@ -72,20 +72,33 @@
             </Component>
             <Component class="javax.swing.JCheckBox" name="chbBirthdateBefore">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Birthdate before"/>
+                <Property name="text" type="java.lang.String" value="Birthdate before (d.M.yyyy)"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chbBirthdateBeforeActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="tfBirthdateBefore">
             </Component>
             <Component class="javax.swing.JCheckBox" name="chbMale">
               <Properties>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Male"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="chbFemale">
               <Properties>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Female"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btFilter">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Filtern"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btFilterActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -112,7 +125,10 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JEditorPane" name="epLocations">
+                <Component class="javax.swing.JEditorPane" name="epManager">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
@@ -124,7 +140,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+        <Container class="javax.swing.JScrollPane" name="spEmployees">
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>

@@ -17,9 +17,12 @@ public class SQLStatements {
             + "		e.birth_date < to_date('{birthdate}', 'MM-DD-YYYY')\n"
             + "	and\n"
             + "		d.dept_name like '%{department}%'"
+            + "order by last_name ASC "
             + "limit {limit} "
             + "offset {offset};";
 
+    public static final String GET_DEPARTMENTS = "select * from departments;";
+    
     public static final String GET_MANAGERS_FOR_DEPARTMENT  = "select *\n"
             + "from employees e\n"
             + "inner join dept_manager dm on dm.emp_no = e.emp_no\n"
