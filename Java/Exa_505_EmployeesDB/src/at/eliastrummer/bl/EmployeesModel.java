@@ -65,4 +65,8 @@ public class EmployeesModel extends AbstractTableModel {
             
         }
     }
+    
+    public Employee getByRow(int row){
+        return employees.get(row);
+    }
 }

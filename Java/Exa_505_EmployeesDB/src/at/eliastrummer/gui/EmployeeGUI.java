@@ -8,18 +8,23 @@ package at.eliastrummer.gui;
 import at.eliastrummer.beans.DepartmentManagerInfo;
 import at.eliastrummer.beans.Employee;
 import at.eliastrummer.beans.Filter;
+import at.eliastrummer.beans.Salary;
 import at.eliastrummer.bl.EmployeesModel;
 import at.eliastrummer.database.DBAcces;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class EmployeeGUI extends javax.swing.JFrame {
 
@@ -90,6 +95,17 @@ public class EmployeeGUI extends javax.swing.JFrame {
                 }
             }
         });
+
+        taEmployees.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        taEmployees.getSelectionModel().addListSelectionListener(lse -> {
+            if (!lse.getValueIsAdjusting() && taEmployees.getSelectedRow() != -1) {
+                List<Salary> salaries = employeesModel.getByRow(taEmployees.getSelectedRow()).getSalaries();
+                salaries.sort(Comparator.comparing(Salary::getFrom));
+                salaries.forEach(s -> {
+                    epSalaries.setText(epSalaries.getText() + "Gehalt: " + s.getSalary() + " € (" + s.getFrom().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + " - " + s.getTo().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")\n");
+                });
+            }
+        });
     }
 
     private void updateCurrentFilter() {
@@ -139,6 +155,9 @@ public class EmployeeGUI extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         spEmployees = new javax.swing.JScrollPane();
         taEmployees = new javax.swing.JTable();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        epSalaries = new javax.swing.JEditorPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -198,7 +217,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1);
 
-        jPanel2.setLayout(new java.awt.BorderLayout());
+        jPanel2.setLayout(new java.awt.GridLayout(2, 0));
 
         taEmployees.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -213,7 +232,21 @@ public class EmployeeGUI extends javax.swing.JFrame {
         ));
         spEmployees.setViewportView(taEmployees);
 
-        jPanel2.add(spEmployees, java.awt.BorderLayout.CENTER);
+        jPanel2.add(spEmployees);
+
+        jPanel5.setLayout(new java.awt.BorderLayout());
+
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(2503, 24));
+        jScrollPane1.setRequestFocusEnabled(false);
+
+        epSalaries.setEditable(false);
+        epSalaries.setMinimumSize(new java.awt.Dimension(400, 400));
+        epSalaries.setPreferredSize(new java.awt.Dimension(250, 21));
+        jScrollPane1.setViewportView(epSalaries);
+
+        jPanel5.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel2.add(jPanel5);
 
         getContentPane().add(jPanel2);
 
@@ -311,11 +344,14 @@ public class EmployeeGUI extends javax.swing.JFrame {
     private javax.swing.JCheckBox chbFemale;
     private javax.swing.JCheckBox chbMale;
     private javax.swing.JEditorPane epManager;
+    private javax.swing.JEditorPane epSalaries;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane spEmployees;
     private javax.swing.JTable taEmployees;

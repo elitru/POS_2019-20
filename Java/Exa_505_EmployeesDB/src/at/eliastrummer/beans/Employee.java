@@ -22,19 +22,19 @@ public class Employee extends TableDisplayObject {
     private Gender gender;
     private LocalDate birthdate;
     private LocalDate hiredate;
-    private Title title;
-    private Salary salary;
+    private List<Title> titles;
+    private List<Salary> salaries;
     private List<EmployeeDepartmentInfo> departmentInfo;
 
-    public Employee(int id, String firstname, String lastname, Gender gender, LocalDate birthdate, LocalDate hiredate, Title title, Salary salary, List<EmployeeDepartmentInfo> departmentInfo) {
+    public Employee(int id, String firstname, String lastname, Gender gender, LocalDate birthdate, LocalDate hiredate, List<Title> titles, List<Salary> salaries, List<EmployeeDepartmentInfo> departmentInfo) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.gender = gender;
         this.birthdate = birthdate;
         this.hiredate = hiredate;
-        this.title = title;
-        this.salary = salary;
+        this.titles = titles;
+        this.salaries = salaries;
         this.departmentInfo = departmentInfo;
     }
 
@@ -99,20 +99,20 @@ public class Employee extends TableDisplayObject {
         this.hiredate = hiredare;
     }
 
-    public Title getTitle() {
-        return title;
+    public List<Title> getTitles() {
+        return titles;
     }
 
-    public void setTitle(Title title) {
-        this.title = title;
+    public void setTitles(List<Title> titles) {
+        this.titles = titles;
     }
 
-    public Salary getSalary() {
-        return salary;
+    public List<Salary> getSalaries() {
+        return salaries;
     }
 
-    public void setSalary(Salary salary) {
-        this.salary = salary;
+    public void setSalaries(List<Salary> salaries) {
+        this.salaries = salaries;
     }
 
     public List<EmployeeDepartmentInfo> getDepartmentInfo() {

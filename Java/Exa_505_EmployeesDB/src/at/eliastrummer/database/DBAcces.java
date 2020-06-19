@@ -123,8 +123,8 @@ public class DBAcces {
                     gender.equalsIgnoreCase("m") ? Gender.MALE : Gender.FEMALE,
                     rs.getDate("birth_date").toLocalDate(),
                     rs.getDate("hire_date").toLocalDate(),
-                    title,
-                    salary,
+                    titles,
+                    salaries,
                     new ArrayList<>()
             );
             
