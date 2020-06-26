@@ -4,14 +4,25 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Salary {
+
+    private int employeeId;
     private int salary;
     private LocalDate from;
     private LocalDate to;
 
-    public Salary(int salary, LocalDate from, LocalDate to) {
+    public Salary(int employeeId, int salary, LocalDate from, LocalDate to) {
+        this.employeeId = employeeId;
         this.salary = salary;
         this.from = from;
         this.to = to;
+    }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
     }
 
     public int getSalary() {
@@ -41,9 +52,10 @@ public class Salary {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + this.salary;
-        hash = 59 * hash + Objects.hashCode(this.from);
-        hash = 59 * hash + Objects.hashCode(this.to);
+        hash = 37 * hash + this.employeeId;
+        hash = 37 * hash + this.salary;
+        hash = 37 * hash + Objects.hashCode(this.from);
+        hash = 37 * hash + Objects.hashCode(this.to);
         return hash;
     }
 
@@ -59,6 +71,9 @@ public class Salary {
             return false;
         }
         final Salary other = (Salary) obj;
+        if (this.employeeId != other.employeeId) {
+            return false;
+        }
         if (this.salary != other.salary) {
             return false;
         }
@@ -70,4 +85,5 @@ public class Salary {
         }
         return true;
     }
+
 }

@@ -10,7 +10,7 @@ import at.eliastrummer.beans.Employee;
 import at.eliastrummer.beans.Filter;
 import at.eliastrummer.beans.Salary;
 import at.eliastrummer.bl.EmployeesModel;
-import at.eliastrummer.database.DBAcces;
+import at.eliastrummer.database.DBAccess;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -43,13 +43,13 @@ public class EmployeeGUI extends javax.swing.JFrame {
 
             filter = new Filter("", true, true, LocalDate.now(), 0, 900);
 
-            DBAcces.getInstance().connect();
+            DBAccess.getInstance().connect();
 
             depModel.addElement("Alle");
             taEmployees.setAutoCreateRowSorter(true);
-            DBAcces.getInstance().getDepartments().forEach(depModel::addElement);
+            DBAccess.getInstance().getDepartments().forEach(depModel::addElement);
 
-            employees = DBAcces.getInstance().getEmployees("", true, true, LocalDate.now(), 0, 900);
+            employees = DBAccess.getInstance().getEmployees("", true, true, LocalDate.now(), 0, 900);
 
             employeesModel = new EmployeesModel(employees);
             taEmployees.setModel(employeesModel);
@@ -71,13 +71,13 @@ public class EmployeeGUI extends javax.swing.JFrame {
                                 isFetching = true;
                                 updateCurrentFilter();
                                 filter.setTo(filter.getTo() + 900);
-                                employees = DBAcces.getInstance().getEmployees(filter.getDepartment(), filter.isMale(), filter.isFemale(), filter.getBirthdateBefore(), filter.getFrom(), filter.getTo());
+                                employees = DBAccess.getInstance().getEmployees(filter.getDepartment(), filter.isMale(), filter.isFemale(), filter.getBirthdateBefore(), filter.getFrom(), filter.getTo());
                                 isFetching = false;
                                 employeesModel.setEmployees(employees);
                                 String text = "";
 
                                 if (!filter.getDepartment().equals("")) {
-                                    for (DepartmentManagerInfo entry : DBAcces.getInstance().getDepartmentManagers(filter.getDepartment())) {
+                                    for (DepartmentManagerInfo entry : DBAccess.getInstance().getDepartmentManagers(filter.getDepartment())) {
                                         text += entry.getManager().getLastname() + ", " + entry.getManager().getFirstname();
                                         text += ": from " + entry.getFrom().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
                                         text += ": to " + (entry.getTo().equals(LocalDate.of(9999, 1, 1)) ? "now" : entry.getTo().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
@@ -100,6 +100,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
         taEmployees.getSelectionModel().addListSelectionListener(lse -> {
             if (!lse.getValueIsAdjusting() && taEmployees.getSelectedRow() != -1) {
                 List<Salary> salaries = employeesModel.getByRow(taEmployees.getSelectedRow()).getSalaries();
+                salaries.removeIf(s -> s.getEmployeeId() != employeesModel.getByRow(taEmployees.getSelectedRow()).getId());
                 salaries.sort(Comparator.comparing(Salary::getFrom));
                 salaries.forEach(s -> {
                     epSalaries.setText(epSalaries.getText() + "Gehalt: " + s.getSalary() + " € (" + s.getFrom().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + " - " + s.getTo().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")\n");
@@ -254,7 +255,7 @@ public class EmployeeGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        DBAcces.getInstance().disconnect();
+        DBAccess.getInstance().disconnect();
     }//GEN-LAST:event_formWindowClosing
 
     private void chbBirthdateBeforeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbBirthdateBeforeActionPerformed
@@ -278,14 +279,13 @@ public class EmployeeGUI extends javax.swing.JFrame {
                     isFetching = true;
                     updateCurrentFilter();
                     filter.setTo(filter.getTo() + 900);
-                    employees = DBAcces.getInstance().getEmployees(filter.getDepartment(), filter.isMale(), filter.isFemale(), filter.getBirthdateBefore(), filter.getFrom(), filter.getTo());
+                    employees = DBAccess.getInstance().getEmployees(filter.getDepartment(), filter.isMale(), filter.isFemale(), filter.getBirthdateBefore(), filter.getFrom(), filter.getTo());
                     isFetching = false;
                     employeesModel.setEmployees(employees);
                     String text = "";
 
                     if (!filter.getDepartment().equals("")) {
-                        for (DepartmentManagerInfo entry : DBAcces.getInstance().getDepartmentManagers(filter.getDepartment())) {
-                            System.out.println("ere");
+                        for (DepartmentManagerInfo entry : DBAccess.getInstance().getDepartmentManagers(filter.getDepartment())) {
                             text += entry.getManager().getLastname() + ", " + entry.getManager().getFirstname();
                             text += ": from " + entry.getFrom().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
                             text += ": to " + (entry.getTo().equals(LocalDate.of(9999, 1, 1)) ? "now" : entry.getTo().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));

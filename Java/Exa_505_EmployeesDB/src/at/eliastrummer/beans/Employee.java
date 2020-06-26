@@ -167,23 +167,24 @@ public class Employee extends TableDisplayObject {
     }
 
     @Override
-    public void setValueForColumn(int columnIndex, Object value) {
+    public boolean setValueForColumn(int columnIndex, Object value) {
         try {
             switch (columnIndex) {
-                case 1:
+                case 0:
                     lastname = value.toString();
                     break;
-                case 2:
+                case 1:
                     firstname = value.toString();
                     break;
-                case 3:
+                case 4:
                     hiredate = LocalDate.parse(value.toString(), DTF);
                     break;
                 default:
                     break;
             }
+            return true;
         } catch (Exception e) {
-
+            return false;
         }
     }
 }

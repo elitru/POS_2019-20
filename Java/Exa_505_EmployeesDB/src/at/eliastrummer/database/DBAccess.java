@@ -21,20 +21,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public class DBAcces {
+public class DBAccess {
 
     private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("MM-dd-yyyy");
-    private static DBAcces theInstance = null;
+    private static DBAccess theInstance = null;
     private Database db;
 
-    public static DBAcces getInstance() {
+    public static DBAccess getInstance() {
         if (theInstance == null) {
-            theInstance = new DBAcces();
+            theInstance = new DBAccess();
         }
         return theInstance;
     }
 
-    private DBAcces() {
+    private DBAccess() {
         try {
             db = new Database();
         } catch (ClassNotFoundException ex) {
@@ -96,7 +96,7 @@ public class DBAcces {
             
             title = titles.get(titles.indexOf(title));
             
-            Salary salary = new Salary(rs.getInt("salary"), rs.getDate("sal_from").toLocalDate(), rs.getDate("sal_to").toLocalDate());
+            Salary salary = new Salary(rs.getInt("emp_no"), rs.getInt("salary"), rs.getDate("sal_from").toLocalDate(), rs.getDate("sal_to").toLocalDate());
             
             if(!salaries.contains(salary)){
                 salaries.add(salary);
@@ -182,5 +182,14 @@ public class DBAcces {
         db.releaseStatement(stmt);
         
         return result;
+    }
+    
+    public void updateEmployee(Employee employee) throws SQLException{
+        Statement stmt = db.getStatement();
+        
+        String query = String.format(SQLStatements.UPDATE_EMPLOYEE, employee.getFirstname(), employee.getLastname(), employee.getHiredate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")), employee.getId());
+        stmt.execute(query);
+        
+        db.releaseStatement(stmt);
     }
 }

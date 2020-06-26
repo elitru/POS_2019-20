@@ -29,6 +29,8 @@ public class SQLStatements {
             + "inner join departments d on d.dept_no = dm.dept_no\n"
             + "where d.dept_name like '%{department}%';";
 
+    public static final String UPDATE_EMPLOYEE = "UPDATE employees SET first_name='%s', last_name='%s', hire_date=TO_DATE('%s', 'DD.MM.YYYY') WHERE emp_no=%d;";
+    
     /*
     
         select *, (
